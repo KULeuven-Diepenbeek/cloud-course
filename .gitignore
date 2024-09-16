@@ -1,0 +1,18 @@
+*.vscode-project
+*.vscode-workspace
+*.vscode
+
+*.class
+
+.hugo_build.lock
+
+.idea/
+out/
+build/
+
+.DS_Store
+
+resources/
+
+# Hugo stuff to deploy github pages. First time you have to create the files with command "$ hugo", then you can add docs/ to gitignore because the outputting of the html files is then handled by Github Actions.
+docs/

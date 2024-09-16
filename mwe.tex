@@ -1,0 +1,370 @@
+% Options for packages loaded elsewhere
+\PassOptionsToPackage{unicode}{hyperref}
+\PassOptionsToPackage{hyphens}{url}
+%
+\documentclass[
+]{article}
+\usepackage{amsmath,amssymb}
+\usepackage{iftex}
+\ifPDFTeX
+  \usepackage[T1]{fontenc}
+  \usepackage[utf8]{inputenc}
+  \usepackage{textcomp} % provide euro and other symbols
+\else % if luatex or xetex
+  \usepackage{unicode-math} % this also loads fontspec
+  \defaultfontfeatures{Scale=MatchLowercase}
+  \defaultfontfeatures[\rmfamily]{Ligatures=TeX,Scale=1}
+\fi
+\usepackage{lmodern}
+\ifPDFTeX\else
+  % xetex/luatex font selection
+\fi
+% Use upquote if available, for straight quotes in verbatim environments
+\IfFileExists{upquote.sty}{\usepackage{upquote}}{}
+\IfFileExists{microtype.sty}{% use microtype if available
+  \usepackage[]{microtype}
+  \UseMicrotypeSet[protrusion]{basicmath} % disable protrusion for tt fonts
+}{}
+\makeatletter
+\@ifundefined{KOMAClassName}{% if non-KOMA class
+  \IfFileExists{parskip.sty}{%
+    \usepackage{parskip}
+  }{% else
+    \setlength{\parindent}{0pt}
+    \setlength{\parskip}{6pt plus 2pt minus 1pt}}
+}{% if KOMA class
+  \KOMAoptions{parskip=half}}
+\makeatother
+\usepackage{xcolor}
+\usepackage{color}
+\usepackage{fancyvrb}
+\newcommand{\VerbBar}{|}
+\newcommand{\VERB}{\Verb[commandchars=\\\{\}]}
+\DefineVerbatimEnvironment{Highlighting}{Verbatim}{commandchars=\\\{\}}
+% Add ',fontsize=\small' for more characters per line
+\newenvironment{Shaded}{}{}
+\newcommand{\AlertTok}[1]{\textcolor[rgb]{1.00,0.00,0.00}{\textbf{#1}}}
+\newcommand{\AnnotationTok}[1]{\textcolor[rgb]{0.38,0.63,0.69}{\textbf{\textit{#1}}}}
+\newcommand{\AttributeTok}[1]{\textcolor[rgb]{0.49,0.56,0.16}{#1}}
+\newcommand{\BaseNTok}[1]{\textcolor[rgb]{0.25,0.63,0.44}{#1}}
+\newcommand{\BuiltInTok}[1]{\textcolor[rgb]{0.00,0.50,0.00}{#1}}
+\newcommand{\CharTok}[1]{\textcolor[rgb]{0.25,0.44,0.63}{#1}}
+\newcommand{\CommentTok}[1]{\textcolor[rgb]{0.38,0.63,0.69}{\textit{#1}}}
+\newcommand{\CommentVarTok}[1]{\textcolor[rgb]{0.38,0.63,0.69}{\textbf{\textit{#1}}}}
+\newcommand{\ConstantTok}[1]{\textcolor[rgb]{0.53,0.00,0.00}{#1}}
+\newcommand{\ControlFlowTok}[1]{\textcolor[rgb]{0.00,0.44,0.13}{\textbf{#1}}}
+\newcommand{\DataTypeTok}[1]{\textcolor[rgb]{0.56,0.13,0.00}{#1}}
+\newcommand{\DecValTok}[1]{\textcolor[rgb]{0.25,0.63,0.44}{#1}}
+\newcommand{\DocumentationTok}[1]{\textcolor[rgb]{0.73,0.13,0.13}{\textit{#1}}}
+\newcommand{\ErrorTok}[1]{\textcolor[rgb]{1.00,0.00,0.00}{\textbf{#1}}}
+\newcommand{\ExtensionTok}[1]{#1}
+\newcommand{\FloatTok}[1]{\textcolor[rgb]{0.25,0.63,0.44}{#1}}
+\newcommand{\FunctionTok}[1]{\textcolor[rgb]{0.02,0.16,0.49}{#1}}
+\newcommand{\ImportTok}[1]{\textcolor[rgb]{0.00,0.50,0.00}{\textbf{#1}}}
+\newcommand{\InformationTok}[1]{\textcolor[rgb]{0.38,0.63,0.69}{\textbf{\textit{#1}}}}
+\newcommand{\KeywordTok}[1]{\textcolor[rgb]{0.00,0.44,0.13}{\textbf{#1}}}
+\newcommand{\NormalTok}[1]{#1}
+\newcommand{\OperatorTok}[1]{\textcolor[rgb]{0.40,0.40,0.40}{#1}}
+\newcommand{\OtherTok}[1]{\textcolor[rgb]{0.00,0.44,0.13}{#1}}
+\newcommand{\PreprocessorTok}[1]{\textcolor[rgb]{0.74,0.48,0.00}{#1}}
+\newcommand{\RegionMarkerTok}[1]{#1}
+\newcommand{\SpecialCharTok}[1]{\textcolor[rgb]{0.25,0.44,0.63}{#1}}
+\newcommand{\SpecialStringTok}[1]{\textcolor[rgb]{0.73,0.40,0.53}{#1}}
+\newcommand{\StringTok}[1]{\textcolor[rgb]{0.25,0.44,0.63}{#1}}
+\newcommand{\VariableTok}[1]{\textcolor[rgb]{0.10,0.09,0.49}{#1}}
+\newcommand{\VerbatimStringTok}[1]{\textcolor[rgb]{0.25,0.44,0.63}{#1}}
+\newcommand{\WarningTok}[1]{\textcolor[rgb]{0.38,0.63,0.69}{\textbf{\textit{#1}}}}
+\setlength{\emergencystretch}{3em} % prevent overfull lines
+\providecommand{\tightlist}{%
+  \setlength{\itemsep}{0pt}\setlength{\parskip}{0pt}}
+\setcounter{secnumdepth}{-\maxdimen} % remove section numbering
+\ifLuaTeX
+  \usepackage{selnolig}  % disable illegal ligatures
+\fi
+\usepackage{bookmark}
+\IfFileExists{xurl.sty}{\usepackage{xurl}}{} % add URL line breaks if available
+\urlstyle{same}
+\hypersetup{
+  pdftitle={2. JDBC en JDBI},
+  hidelinks,
+  pdfcreator={LaTeX via pandoc}}
+
+\title{2. JDBC en JDBI}
+\author{}
+\date{}
+
+\begin{document}
+\maketitle
+
+\subsection{1.1 Java Database Connectivity
+(JDBC)}\label{java-database-connectivity-jdbc}
+
+\subsubsection{1.1.1 Hoe verbind ik Java met de
+DB?}\label{hoe-verbind-ik-java-met-de-db}
+
+\href{https://www.tutorialspoint.com/jdbc/index.htm}{JDBC} is een
+interface in de JDK die ons in staat stelt om een connectie te openen
+naar een database. \textbf{JDBC is een API}: een abstracitelaag of een
+\emph{protocol}. Dit betekent dat we met JDBC kunnen verbinden naar
+eender welke server van eender welke flavor: een Oracle SQL, MSSQL, of
+SQLite database. De database \emph{vendor} wordt verborgen achter de
+JDBC laag. Voor deze oefeningen beperken we ons tot SQLite.
+
+\{\{\% notice info \%\}\} Update van de cursustekst en oefeningen zijn
+onderweg, tegen de volgende les van 29/03 zullen we alles overschakelen
+naar MYSQL dat jullie eerder al gebruikten met XAMP en phpmyadmin. Enige
+verschillen met MYSQL zijn: \textbar{} MYSQL \textbar{} SQLITE
+\textbar{} \textbar---\textbar---\textbar{} \textbar{} AUTO\_INCREMENT
+\textbar{} AUTOINCREMENT \textbar{} \textbar{} BOOLEAN \textbar{} BOOL
+\textbar{} \{\{\% /notice \%\}\}
+
+Voor elke database moet er dus een vendor-specifieke driver als
+dependency worden toegevoegd. In het geval van SQLite is dit de
+\href{https://github.com/xerial/sqlite-jdbc}{sqlite-jdbc} driver, de
+\texttt{sqlite-jdbc} package. JDBC zelf leeft in \texttt{java.sql} en is
+een integraal onderdeel van de JDK: dit moeten we dus niet apart
+oplijsten als dependency of downloaden.
+
+\{\{\}\} graph LR; Java{[}Java{]} JDBC{[}JDBC{]} SQLITE{[}SQLite-JDBC{]}
+DB{[}(SQLite Database){]} subgraph Java space subgraph JDK Java
+-.-\textgreater{} JDBC end JDBC --\textgreater{} SQLITE end subgraph DB
+space SQLITE --\textgreater{} DB end \{\{\textless{} /mermaid
+\textgreater\}\}
+
+De \texttt{sqlite-jdbc} package zorgt voor de brug tussen onze Java
+applicatie en de database, maar we spreken die aan via JDBC.
+
+Enkele belangrijke statements:
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\tightlist
+\item
+  Een connectie naar een database vastleggen:
+  \texttt{var\ connection\ =\ DriverManager.getConnection("jdbc:sqlite:mydb.db");}
+\item
+  Een \texttt{SELECT} query uitvoeren:
+  \texttt{var\ s\ =\ connection.createStatement();\ var\ result\ =\ s.executeQuery("...");\ var\ cell\ =\ result.getString("column");}
+\item
+  Een \texttt{INSERT}/\texttt{UPDATE}/\ldots{} query uitvoeren (die de
+  structuur of inhoud van de database \textbf{wijzigt}):
+  \texttt{var\ s\ =\ connection.createStatement();\ s.executeUpdate("...");}
+\end{enumerate}
+
+Het volgende voorbeeld opent een verbinding naar een DB, maakt een tabel
+aan, voegt een record toe, en telt het aantal records:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{private} \BuiltInTok{Connection}\NormalTok{ connection}\OperatorTok{;}
+\KeywordTok{public} \DataTypeTok{void} \FunctionTok{createDb}\OperatorTok{()} \KeywordTok{throws} \BuiltInTok{SQLException} \OperatorTok{\{}
+\NormalTok{    connection }\OperatorTok{=} \BuiltInTok{DriverManager}\OperatorTok{.}\FunctionTok{getConnection}\OperatorTok{(}\StringTok{"jdbc:sqlite:mydb.db"}\OperatorTok{);}
+    \DataTypeTok{var}\NormalTok{ s }\OperatorTok{=}\NormalTok{ connection}\OperatorTok{.}\FunctionTok{createStatement}\OperatorTok{();}
+\NormalTok{    s}\OperatorTok{.}\FunctionTok{executeUpdate}\OperatorTok{(}\StringTok{"CREATE TABLE mijntabel(nr INT); INSERT INTO mijntabel(nr) VALUES(1);"}\OperatorTok{)}
+\NormalTok{    s}\OperatorTok{.}\FunctionTok{close}\OperatorTok{();}
+\OperatorTok{\}}
+\KeywordTok{public} \DataTypeTok{void} \FunctionTok{verifyDbContents}\OperatorTok{()} \KeywordTok{throws} \BuiltInTok{SQLException} \OperatorTok{\{}
+    \DataTypeTok{var}\NormalTok{ s }\OperatorTok{=}\NormalTok{ connection}\OperatorTok{.}\FunctionTok{createStatement}\OperatorTok{();}
+    \DataTypeTok{var}\NormalTok{ result }\OperatorTok{=}\NormalTok{ s}\OperatorTok{.}\FunctionTok{executeQuery}\OperatorTok{(}\StringTok{"SELECT COUNT(*) FROM mijntabel;"}\OperatorTok{);}
+    \DataTypeTok{var}\NormalTok{ count }\OperatorTok{=}\NormalTok{ result}\OperatorTok{.}\FunctionTok{getInt}\OperatorTok{(}\DecValTok{0}\OperatorTok{);}
+\NormalTok{    s}\OperatorTok{.}\FunctionTok{close}\OperatorTok{();}
+
+    \ControlFlowTok{assert}\NormalTok{ count }\OperatorTok{==} \DecValTok{1}\OperatorTok{;}
+\OperatorTok{\}}
+\end{Highlighting}
+\end{Shaded}
+
+\textbf{Gradle} dependency: laatste versie van
+\href{https://mvnrepository.com/artifact/org.xerial/sqlite-jdbc}{sqlite-jdbc
+in mvnrepository.com}.
+
+Merk op dat \texttt{SQLException} een \textbf{checked exception} is die
+je constant moet meespelen in de method signature of expliciet moet
+opvangen. Het probleem van een
+\texttt{try\ \{\ \}\ catch\ \{\ \}\ finally\ \{\ \}} block is dat in de
+finally je ook geen \texttt{close()} kan uitvoeren zonder opnieuw een
+\texttt{try} block te openen\ldots{} Inception!
+
+Het \texttt{connection.close()} statement moet er voor zorgen dat voor
+elke request de connection netjes wordt afgesloten. Een database heeft
+meestal een \textbf{connection pool} van x aantel beschikbare
+connections, bijvoorbeeld 5. Als een connection per request niet wordt
+gesloten, heeft de voglende bezoeker van onze website geen enkele kans
+om zijn zoekquery te lanceren, omdat de database dan zegt dat alle
+connecties zijn opgebruikt!
+
+Merk op dat de String \texttt{jdbc:sqlite:mydb.db} een \textbf{lokale
+SQLite database file} aanmaakt op het huidig relatief pad, zodat je met
+SQLite Explorer data kan inspecteren. Deze file wordt herbruikt: indien
+je een tabel aanmaakt de eerste keer, gaat dit de tweede keer crashen
+met \emph{table already exists}. Houd hier dus rekening mee (e.v.t. met
+\texttt{IF\ NOT\ EXISTS}). Je kan ook een \textbf{in-memory database}
+aanmaken, die volledig in RAM leeft en bij elke opstart opnieuw wordt
+aangemaakt, met de String \texttt{jdbc:sqlite:memory}.
+
+Werk je met een andere database maar heb je geen idee hoe die speciale
+connection string te vormen? Geen probleem, daarvoor dient
+\url{https://www.connectionstrings.com/}. Bijvoorbeeld, een connectie
+naar de Microsoft Azure cloud kan met de volgende syntax:
+
+\begin{verbatim}
+Server=tcp:myserver.database.windows.net,1433;Database=myDataBase;User ID=mylogin@myserver;Password=myPassword;Trusted_Connection=False;Encrypt=True;
+\end{verbatim}
+
+Het is de connection string die bepaalt welke dependency binding
+gebruikt wordt! Dit noemen we \emph{late binding}: er is \textbf{geen
+expliciete referentie} naar iets van SQLite in de Java code; we werken
+\emph{enkel} met JDBC zelf. Als je de vendor driver vergeet toe te
+voegen als Gradle dependency gebeurt er dit:
+
+\begin{verbatim}
+Exception in thread "main" java.sql.SQLException: No suitable driver found for jdbc:sqlite:mydb.db
+    at java.sql/java.sql.DriverManager.getConnection(DriverManager.java:702)
+    at java.sql/java.sql.DriverManager.getConnection(DriverManager.java:251)
+    at Demo.main(Demo.java:8)
+\end{verbatim}
+
+\{\{\% notice note \%\}\} In-memory databases (ConStr.
+\texttt{jdbc:sqlite:memory}), die met een lege database vertrekken, en
+constant \texttt{CREATE\ TABLE()} statements issuen, vervuilen je
+broncode. Als je veel SQL moet uitvoeren is het beter om dit in een
+\texttt{.sql} bestand te bewaren in \texttt{src/main/resources} en
+eenmalig in te lezen als SQL met
+\texttt{new\ String(Files.readAllBytes(Paths.g));}, om te kunnen
+uitvoeren via \texttt{statement.executeUpdate()}. Zie het
+\href{https://github.com/KULeuven-Diepenbeek/db-course/tree/main/examples/java/jdbc-repo-start}{jdbc-repo-start}
+project op GitHub als voorbeeld. \{\{\% /notice \%\}\}
+
+\subsubsection{1.1.2 Queries/Objecten in
+JDBC}\label{queriesobjecten-in-jdbc}
+
+Stel dat we dezelfde studenten willen inladen in een \texttt{Student}
+klasse instantie: van de \texttt{TABLE\ STUDENT} naar de
+\texttt{class\ Student}. In geval van JDBC is dat veel handwerk:
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\tightlist
+\item
+  Maak een verbinding met de database.
+\item
+  Voer de \texttt{SELECT} statements uit.
+\item
+  Loop door de \texttt{ResultSet} en maak een nieuwe \texttt{Student}
+  instantie aan. Vang alle mogelijke fouten zelf op: wat met lege
+  kolommen, \texttt{null}? Wat met \texttt{INTEGER} kolommen die je wilt
+  mappen op een \texttt{String} property?
+\end{enumerate}
+
+Om van de huidige resultatenrij naar de volgende te springen in
+\texttt{ResultSet} gebruikt men de methode \texttt{next()} in een
+typisch \texttt{while()} formaat:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\DataTypeTok{var}\NormalTok{ result }\OperatorTok{=}\NormalTok{ statement}\OperatorTok{.}\FunctionTok{executeQuery}\OperatorTok{(}\StringTok{"SELECT * FROM iets"}\OperatorTok{);}
+\ControlFlowTok{while}\OperatorTok{(}\NormalTok{result}\OperatorTok{.}\FunctionTok{next}\OperatorTok{())} \OperatorTok{\{}
+    \DataTypeTok{var}\NormalTok{ eenString }\OperatorTok{=}\NormalTok{ result}\OperatorTok{.}\FunctionTok{getString}\OperatorTok{(}\StringTok{"kolomnaam"}\OperatorTok{);}
+    \CommentTok{// doe iets!}
+\OperatorTok{\}}
+\end{Highlighting}
+\end{Shaded}
+
+Zie ook
+\href{https://docs.oracle.com/javase/7/docs/api/java/sql/ResultSet.html}{ResultSet
+Oracle Javadoc}.
+
+Aangezien we reeds hebben kennis gemaakt met de (beperkte) API,
+schakelen we onmiddellijk over naar de oefeningen:
+
+\subsubsection{1.1.3 Oefeningen}\label{oefeningen}
+
+Gebruik voor de oefeningen de \texttt{student} tabel statements uit
+\href{/transacties/failures-rollbacks/}{RDBMS Transacties - Failures \&
+Rollbacks}.
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\tightlist
+\item
+  Maak (én test!) een klasse \texttt{StudentRepository} die de volgende
+  methode implementeert. Zoals je ziet is het de bedoeling dat de JDBC
+  \texttt{Connection} instance elders wordt aangemaakt, bijvoorbeeld in
+  een \textbf{aparte} \texttt{ConnectionManager} klasse.
+\end{enumerate}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{public} \KeywordTok{class}\NormalTok{ StudentRepository }\OperatorTok{\{}
+        \KeywordTok{public} \FunctionTok{StudentRepository}\OperatorTok{(}\BuiltInTok{Connection}\NormalTok{ connection}\OperatorTok{);}
+        \KeywordTok{public} \BuiltInTok{List}\OperatorTok{\textless{}}\NormalTok{Student}\OperatorTok{\textgreater{}} \FunctionTok{getStudentsByName}\OperatorTok{(}\BuiltInTok{String}\NormalTok{ name}\OperatorTok{);}
+\OperatorTok{\}}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\setcounter{enumi}{1}
+\tightlist
+\item
+  Hoe zou je bovenstaande \texttt{StudentRepository} unit (integratie)
+  testen, zonder de ``productie database'' op te vullen met testdata?
+  (Hint: kijk naar het constructor argument). Hoe kan je
+  \texttt{getStudentsByName()} testen zonder de volgende oefening
+  afgewerkt te hebben, die nieuwe studenten bewaren pas mogelijk maakt?
+\item
+  Breid dit uit met \texttt{saveNewStudent(Student)}.
+\item
+  Breid dit uit met \texttt{updateStudent(Student)}. Wat moet je doen
+  als deze student nog niet in de database zit? Welke gegevens update je
+  wel en welke niet?
+\item
+  Merk op dat elke keer als je je project opstart je geen
+  \texttt{CREATE\ TABLE\ student} kan uitvoeren als je een file-based
+  SQLite bestand hanteert: eens de tabel is aangemaakt geeft een nieuwe
+  create foutmeldingen. \texttt{DROP\ TABLE\ IF\ EXISTS\ student;} lost
+  dit op, maar daardoor ben je ook altijd je data kwijt. Hoe los je dit
+  probleem op?
+\item
+  Stel dat een \texttt{Student} is ingeschreven in een \texttt{Cursus}
+  met properties \texttt{naam} (vb. ``databases'') en \texttt{ects} (vb.
+  4).
+
+  \begin{itemize}
+  \tightlist
+  \item
+    Maak een \texttt{CursusRepository} om nieuwe cursussen te bewaren.
+  \item
+    Hoe link je de \texttt{Student} klasse met de \texttt{Cursus}
+    klasse? wat verandert er in de query van
+    \texttt{getStudentsByName()}?
+  \end{itemize}
+\end{enumerate}
+
+\textbf{Tips}:
+
+\begin{itemize}
+\tightlist
+\item
+  \texttt{executeUpdate()} van een \texttt{Statement} is erg omslachtig
+  als je een string moet stamenstellen die een \texttt{INSERT} query
+  voorstelt (haakjes, enkele quotes, \ldots). Wat meer is, als de input
+  van een UI komt, kan dit gehacked worden, door zelf de quote te
+  sluiten in de string. Dit noemt men \textbf{SQL Injection}, en om dat
+  te vermijden gebruik je in JDBC de \texttt{prepareStatement()}
+  methode. Zie
+  \href{https://docs.oracle.com/javase/tutorial/jdbc/basics/prepared.html}{JDBC
+  Basics: Prepared Statements}. De String die je meegeeft bevat in de
+  plaats van parameters een vraagteken:
+  \texttt{INSERT\ INTO\ STUDENT(bla,\ bla)\ VALUES(?,\ ?)}. Die
+  parameters vul je daarna aan met
+  \texttt{preparedStatement.setString()} of \texttt{setInt()}. Op die
+  manier is de code zowel \emph{netjes} als \emph{injectie-vrij}!
+\item
+  Als je data wenst op te halen dat is verspreid over verschillende
+  tabellen, is de kans groot dat een \texttt{JOIN} SQL statement nodig
+  is. Probeer eerst de query te schrijven in de \emph{SQLite DB Browser}
+  tool. De Java objecten opvullen is de laatste taak.
+\end{itemize}
+
+\end{document}

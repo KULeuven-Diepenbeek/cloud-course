@@ -1,0 +1,78 @@
+languageCode = "nl"
+title = "Full Stack Web Development"
+
+baseurl = "https://kuleuven-diepenbeek.github.io/fsweb-course/"
+# fix for subdir baseurl, see https://discourse.gohugo.io/t/issue-when-baseurl-have-subdirectory/4088/7
+RelativeURLs=true
+CanonifyURLs=true
+
+theme = "hugo-theme-kul"
+publishDir = "docs"
+enableEmoji = true
+enableRobotsTXT = true
+pygmentsCodefences = true
+
+# for .Lastmod to work with .GitInfo: --enableGitInfo https://gohugo.io/variables/git/
+enableGitInfo = true
+
+[markup]
+  defaultMarkdownHandler = "goldmark"
+  
+  [markup.goldmark.renderer]
+    unsafe= true
+
+  [markup.highlight]
+    codeFences = true
+    guessSyntax = false
+    hl_Lines = ""
+    lineNoStart = 1
+    lineNos = false
+    lineNumbersInTable = true
+    noClasses = true
+    tabWidth = 4
+    style = "monokailight"
+
+  [markup.tableOfContents]
+    endlevel = 4
+    ordered = true
+
+[privacy]
+  [privacy.youtube]
+    disable = false
+    privacyEnhanced = true
+
+[taxonomies]
+    tag = "tags"
+
+[params]
+    disableComments = true
+    disableInlineCopyToClipBoard = true
+    ordersectionsby = "weight"
+
+# see https://learn.netlify.com/en/basics/configuration/
+[outputs]
+home = [ "HTML", "RSS", "JSON"]
+
+[params.author]
+  name = "Arne Duyver"
+  email = "<i>fname</i>.<i>lname</i>A T<i>kuleuven.be</i>"
+
+[[menu.shortcuts]] 
+name = "<i class='fa fa-university'></i> Toledo"
+identifier = "tol"
+url = "https://toledo.kuleuven.be/portal/"
+weight = 10
+
+[[menu.shortcuts]] 
+name = "<i class='fa fa-university'></i> Studiegids"
+identifier = "stud"
+url = "https://studiegidswww.uhasselt.be/opleidingsonderdeel.aspx?a=2023&i=4891"
+weight = 1
+
+[[menu.shortcuts]] 
+name = "<i class='fab fa-github'></i> Course Git Repository"
+identifier = "cgit"
+url = "https://github.com/kuleuven-diepenbeek/fsweb-course/"
+weight = 20
+
+
