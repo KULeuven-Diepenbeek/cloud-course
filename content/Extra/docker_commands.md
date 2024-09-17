@@ -71,8 +71,4 @@ volumes:
 - Maak de container(s) aan en start ze met `$ docker-compose up -d` met de flag `-d` voor detached mode.
 - Stop en remove de container(s) met `$ docker-compose down`.
 
-<!--TODO: ### Docker build file commands
-
-```
-
-``` -->
+<!--TODO: ### Docker build file commands-->

@@ -13,9 +13,14 @@ We gaan uiteindelijk in de applicatiecolleges verschillende api's aanmaken. Bela
 
 Volg de instructies op deze [webpagina](https://docs.docker.com/engine/install/) om docker correct te installeren op jouw pc.
 
-**Enable zeker de Virtualisatie optie in je BIOS. Zie [hier](https://www.virtualmetric.com/blog/how-to-enable-hardware-virtualization) hoe je dit doet.**
+**Enable zeker de Virtualisatie optie in je BIOS. Zie [hier](https://www.virtualmetric.com/blog/how-to-enable-hardware-virtualization) hoe je dit doet. _via de Task Manager (Ctrl+Shift+Esc) -> performance tab -> cpu kan je ook kijken of 'Virtualization' enabled is_**
 
 (Windows gebruikers kunnen Docker desktop gebruiken om te interageren met containers, maar we gaan in deze cursus vooral gebruik maken van de terminal)
+
+### Docker images en build files
+Al dan niet goed gedocumenteerd:
+- [Dockerhub](https://hub.docker.com/)
+- [Github](https://www.github.com)
 
 ### VSCode
 
