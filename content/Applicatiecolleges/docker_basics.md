@@ -2,7 +2,7 @@
 title: "Docker Basics"
 weight: 1
 author: Arne Duyver
-draft: true
+draft: false
 ---
 
 ### Demo 1: Hello World
@@ -154,7 +154,7 @@ _Speel eens even met deze methoden en kijk wanneer data verloren gaat, hoe de sy
 
 ### Exercise 3:
 - Breid de functionaliteit van je website uit [Exercise 1](#exercise-1) uit zodat deze via javascript calls maakt naar de database om data uit de database te displayen. (Je mag ht ip-adres, de port, username, password en databasenaam hardcoded opslaan in de javascript)
-<!-- TODO: DO this myself En put solutions here in commment so you can uncomment in lesson -->
+<!-- TODO: DO this myself En put solutions here in comment so you can uncomment in lesson -->
 
 ### Demo 3: Docker compose
 In plaats dat we steeds een lang run commando moeten runnen zou het handig zijn al deze instellingen in een soort script te verzamelen. Dit kan en zo een file heet een `docker-compose.yml` file. We gebruiken yaml syntax om de juiste instellingen op te stellen. Merk hieronder ook op dat we gebruik maken van **services** hier komen we later nog op terug omdat we in deze compose file ook meerdere containers in een keer kunnen opstarten en nog veel meer.
