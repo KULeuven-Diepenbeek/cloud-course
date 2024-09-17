@@ -15,6 +15,8 @@ Volg de instructies op deze [webpagina](https://docs.docker.com/engine/install/)
 
 **Enable zeker de Virtualisatie optie in je BIOS. Zie [hier](https://www.virtualmetric.com/blog/how-to-enable-hardware-virtualization) hoe je dit doet.**
 
+(Windows gebruikers kunnen Docker desktop gebruiken om te interageren met containers, maar we gaan in deze cursus vooral gebruik maken van de terminal)
+
 ### VSCode
 
 Als code/text editor gaan we gebruik maken van VSCode omdat je hier een aantal extensies kan voor installeren waarmee je zeer gemakkelijk kan werken aan/in docker containers.

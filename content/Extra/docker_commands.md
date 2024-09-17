@@ -2,7 +2,7 @@
 title: "Docker Commands"
 weight: 1
 author: Arne Duyver
-draft: true
+draft: false
 ---
 
 ### Overview of Docker Commands
@@ -26,9 +26,12 @@ $ docker run -v <dockervolume>:<containerdirectory_absolutepath> <imagename>
 # Run a container and bind host directory
 $ docker run -v <hostdirectory_absolutepath>:<containerdirectory_absolutepath> <imagename>
 
-
 # Stop a container
 $ docker stop <containername or (partof)containerid>
+
+# Remove a container
+$ docker rm <containername or (partof)containerid>
+## You can put multiple container names after each other with spaces in between to start/stop/remove multiple containers at once
 
 # List running docker containers
 $ docker ps
@@ -44,13 +47,32 @@ $ docker exec -it <containername> /bin/bash
 ```
 
 ### Docker-compose.yml example/template
+Simple example:
+```yml
+# docker-compose.yml
+version: '3.8'
 
-```yaml
-TODO:
+services:
+  static_website:
+    image: dockersamples/static-site:latest
+    container_name: static_website
+    ports:
+      - "9090:80"
+    environment:
+      - AUTHOR=YourName
+    volumes:
+      - static_website_volume:/usr/share/nginx/html
+    restart: always
+
+volumes:
+  static_website_volume:
+```
+- Zorg ervoor dat je met je terminal in de directory van je docker-compose file zit.
+- Maak de container(s) aan en start ze met `$ docker-compose up -d` met de flag `-d` voor detached mode.
+- Stop en remove de container(s) met `$ docker-compose down`.
+
+<!--TODO: ### Docker build file commands
+
 ```
 
-### Docker build file commands
-
-```
-TODO:
-```
+``` -->
