@@ -13,7 +13,7 @@ $ docker run hello-world
 Merk op dat de container automatisch stopt.
 
 ### Demo 2: Static Website
-<!-- TODO: -->
+<!-- TODO: something -->
 
 #### Binding ports and detached mode
 
