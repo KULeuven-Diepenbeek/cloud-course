@@ -1,7 +1,7 @@
 languageCode = "nl"
-title = "Full Stack Web Development"
+title = "Cloud computing & toepassingen"
 
-baseurl = "https://kuleuven-diepenbeek.github.io/fsweb-course/"
+baseurl = "https://kuleuven-diepenbeek.github.io/cloud-course/"
 # fix for subdir baseurl, see https://discourse.gohugo.io/t/issue-when-baseurl-have-subdirectory/4088/7
 RelativeURLs=true
 CanonifyURLs=true
@@ -66,13 +66,18 @@ weight = 10
 [[menu.shortcuts]] 
 name = "<i class='fa fa-university'></i> Studiegids"
 identifier = "stud"
-url = "https://studiegidswww.uhasselt.be/opleidingsonderdeel.aspx?a=2023&i=4891"
+url = "https://studiegidswww.uhasselt.be/opleidingsonderdeel.aspx?a=2024&i=4090"
 weight = 1
 
 [[menu.shortcuts]] 
 name = "<i class='fab fa-github'></i> Course Git Repository"
-identifier = "cgit"
-url = "https://github.com/kuleuven-diepenbeek/fsweb-course/"
+identifier = "cloudgit"
+url = "https://github.com/kuleuven-diepenbeek/cloud-course/"
 weight = 20
+[[menu.shortcuts]] 
+name = "<i class='fab fa-github'></i> Course Git Repository - Student exercises"
+identifier = "cloudgitex"
+url = "https://github.com/kuleuven-diepenbeek/cloud-demos-exercises-student/"
+weight = 21
 
 

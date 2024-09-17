@@ -1,9 +1,9 @@
 ---
 title: "Opdrachten"
 chapter: true
-weight: 4
+weight: 10
 author: Arne Duyver
-draft: false
+draft: true
 ---
 
-## Zie menu links
+## 
