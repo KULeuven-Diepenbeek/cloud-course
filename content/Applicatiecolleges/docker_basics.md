@@ -143,18 +143,22 @@ Deze methode heeft als voordeel dat je bijvoorbeeld je host code editor kan gebr
 
 _Speel eens even met deze methoden en kijk wanneer data verloren gaat, hoe de synchronisatie werkt tussen host en container ..._
 
-### Exercise 1: 
+### Exercise 1
 - Gebruik de nginx base image en maak gebruik van docker volumes om je eigen statische website te tonen
 <!-- TODO: DO this myself En put solutions on github -->
 
-### Exercise 2: 
+### Exercise 2
 - Gebruik een db image en maak een database aan (je mag kiezen welke database je wil)
 - Interageer met de database door middel van een attached console en de commandline interface van de database
 <!-- TODO: DO this myself En put solutions here in comment so you can uncomment in lesson -->
 
-### Exercise 3: (werkt niet meer dus moet je niet doen. We komen hier later op terug)
-- Breid de functionaliteit van je website uit [Exercise 1](#exercise-1) uit zodat deze via javascript calls maakt naar de database om data uit de database te displayen. (Je mag ht ip-adres, de port, username, password en databasenaam hardcoded opslaan in de javascript)
-<!-- TODO: DO this myself En put solutions here in comment so you can uncomment in lesson -->
+### Exercise 3 (OUD): (werkt niet meer dus moet je niet doen. We komen hier later op terug)
+- Breid de functionaliteit van je website uit [Exercise 1](#exercise-1) uit zodat deze via javascript calls maakt naar de database om data uit de database te displayen. (Je mag het ip-adres, de port, username, password en databasenaam hardcoded opslaan in de javascript)
+<!--TODO: CHANGE EXERCSiSE DO this myself En put solutions here in comment so you can uncomment in lesson -->
+
+### Exercise 3
+- Maak een nieuwe container met een website zodat deze via javascript calls een HTTP GET request stuurt naar de website uit [Exercise 1](#exercise-1) wanneer je op een knop klikt en display het resultaat van de get request. (Je kan `localhost:port_van_de_container_uit1` gebruiken om je get request uit te voeren.)
+<!--TODO: CHANGE EXERCSISE DO this myself En put solutions here in comment so you can uncomment in lesson -->
 
 ### Demo 3: Docker compose
 In plaats dat we steeds een lang run commando moeten runnen zou het handig zijn al deze instellingen in een soort script te verzamelen. Dit kan en zo een file heet een `docker-compose.yml` file. We gebruiken yaml syntax om de juiste instellingen op te stellen. Merk hieronder ook op dat we gebruik maken van **services** hier komen we later nog op terug omdat we in deze compose file ook meerdere containers in een keer kunnen opstarten en nog veel meer.
