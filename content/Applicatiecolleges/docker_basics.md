@@ -152,7 +152,7 @@ _Speel eens even met deze methoden en kijk wanneer data verloren gaat, hoe de sy
 - Interageer met de database door middel van een attached console en de commandline interface van de database
 <!-- TODO: DO this myself En put solutions here in comment so you can uncomment in lesson -->
 
-### Exercise 3:
+### Exercise 3: (werkt niet meer dus moet je niet doen. We komen hier later op terug)
 - Breid de functionaliteit van je website uit [Exercise 1](#exercise-1) uit zodat deze via javascript calls maakt naar de database om data uit de database te displayen. (Je mag ht ip-adres, de port, username, password en databasenaam hardcoded opslaan in de javascript)
 <!-- TODO: DO this myself En put solutions here in comment so you can uncomment in lesson -->
 
