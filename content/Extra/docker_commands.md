@@ -71,4 +71,43 @@ volumes:
 - Maak de container(s) aan en start ze met `$ docker-compose up -d` met de flag `-d` voor detached mode.
 - Stop en remove de container(s) met `$ docker-compose down`.
 
-<!--TODO: ### Docker build file commands-->
+### [Docker build file commands](https://kapeli.com/cheat_sheets/Dockerfile.docset/Contents/Resources/Documents/index)
+```Dockerfile
+# Start met de volgende base image
+FROM <image>:<tag>
+# Stel de user van de base image in
+USER <username>
+# Stel de working directory in
+WORKDIR </path/to/workdir>
+# Kopieer files van de host naar de base image
+COPY <src> [<src> ...] <dest>
+## (this form below is required for paths containing whitespace)
+COPY ["<src>", ... "<dest>"] 
+# Run een commando in de base image
+RUN <command> 
+RUN ["<executable>", "<param1>", "<param2>"] (exec form)
+# Expose een port van de image (dit maakt deze port nog NIET beschikbaar in de host)
+EXPOSE <port> [<port> ...]
+# Definieer environment variables
+ENV <key> <value>
+ENV <key>=<value> [<key>=<value> ...]
+# Entrypoint zodat container runt zoals een executable
+ENTRYPOINT ["<executable>", "<param1>", "<param2>"] (exec form, preferred)
+ENTRYPOINT <command> <param1> <param2> (shell form)
+```
+#### Build your own image 
+```bash
+$ docker build . -t my_image_name
+```
+#### Build your own image inside a docker-compose file
+```yaml
+version: '3.7'
+
+services:
+  service_name:
+    container_name: container_name
+    build:
+      context: .
+      dockerfile: ./Dockerfile
+    ...
+```
