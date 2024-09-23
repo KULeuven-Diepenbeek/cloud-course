@@ -150,11 +150,11 @@ _Speel eens even met deze methoden en kijk wanneer data verloren gaat, hoe de sy
 - Gebruik een db image en maak een database aan (je mag kiezen welke database je wil)
 - Interageer met de database door middel van een attached console en de commandline interface van de database
 
-### Exercise 3 (OUD): (werkt niet meer dus moet je niet doen. We komen hier later op terug)
+<!-- ### Exercise 3 (OUD): (werkt niet meer dus moet je niet doen. We komen hier later op terug)
 - Breid de functionaliteit van je website uit [Exercise 1](#exercise-1) uit zodat deze via javascript calls maakt naar de database om data uit de database te displayen. (Je mag het ip-adres, de port, username, password en databasenaam hardcoded opslaan in de javascript)
 
 ### Exercise 3
-- Maak een nieuwe container met een website zodat deze via javascript calls een HTTP GET request stuurt naar de website uit [Exercise 1](#exercise-1) wanneer je op een knop klikt en display of de request succesvol was. (Je kan `localhost:port_van_de_container_uit1` gebruiken om je get request uit te voeren.)
+- Maak een nieuwe container met een website zodat deze via javascript calls een HTTP GET request stuurt naar de website uit [Exercise 1](#exercise-1) wanneer je op een knop klikt en display of de request succesvol was. (Je kan `localhost:port_van_de_container_uit1` gebruiken om je get request uit te voeren.) -->
 
 ### Demo 3: Docker compose
 In plaats dat we steeds een lang run commando moeten runnen zou het handig zijn al deze instellingen in een soort script te verzamelen. Dit kan en zo een file heet een `docker-compose.yml` file. We gebruiken yaml syntax om de juiste instellingen op te stellen. Merk hieronder ook op dat we gebruik maken van **services** hier komen we later nog op terug omdat we in deze compose file ook meerdere containers in een keer kunnen opstarten en nog veel meer.
