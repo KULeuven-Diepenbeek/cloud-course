@@ -10,9 +10,10 @@ Academiejaar 2024---2025.
 
 ## _Planning_
 
-| nr  | datum         | onderwerp                 |
-|-----|---------------|---------------------------|
-| 01  | do 18-09-2024 | Docker Basics
+| nr  | datum         | onderwerp                     |
+|-----|---------------|-------------------------------|
+| 01  | ma 16-09-2024 | Docker Basics                 |
+| 02  | ma 23-09-2024 | Docker build files & networks |
 
 ## _Cursus noties_
 
