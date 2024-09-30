@@ -23,6 +23,8 @@ Er worden telkens blokken van 2 uur ingepland voor dit vak. Er zijn geen traditi
 
 - Applicatiecolleges:
     1. [Docker Basics](/applicatiecolleges/docker_basics/) 
+    1. [Docker build files](/applicatiecolleges/docker_build_files/)
+    1. [Docker networks](/applicatiecolleges/docker-compose_services/)
     
 
 ## Syllabus
