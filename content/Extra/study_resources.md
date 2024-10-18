@@ -16,3 +16,9 @@ Op deze pagina kan je links terugvinden naar extra bronnen om concepten en techn
 - [Frontend vs backend](https://www.youtube.com/watch?v=PRSyHTajxPk)
 - [What is a webserver](https://www.youtube.com/watch?v=XBu54nfzxAQ)
 - [Flask webserver python](https://www.youtube.com/watch?v=Z1RJmh_OqeA)
+- [RESTapi](https://www.youtube.com/watch?v=lsMQRaeKNDk)
+- [RESTapi in flask](https://www.youtube.com/watch?v=GMppyAPbLYk)
+- [CORS](https://www.youtube.com/watch?v=PNtFSVU-YTI)
+- [Laravel](https://www.youtube.com/watch?v=MFh0Fd7BsjE)
+- [RESTapi in laravel](https://www.youtube.com/watch?v=Vik6oo4O7xo)
+
