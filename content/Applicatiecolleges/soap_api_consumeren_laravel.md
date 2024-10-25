@@ -173,6 +173,11 @@ Route::get('/soapTest', function () {
 ## Call maken vanuit de backend anders CORS problemen
 Dan moeten we een extra endpoint voorzien in de `routes/web.php`:
 
+<details open>
+    <summary><i><b>Klik hier om de code te zien/verbergen voor `routes/web.php`</b></i></summary>
+    <p>
+
+
 ```php
 use Illuminate\Http\Request;
 
@@ -227,8 +232,13 @@ Route::post('/soapAdd', function (Request $request) {
     return response()->json(['result' => $result]);
 });
 ```
+</p>
+</details>
 
 Now we update the view to maken use of this endpoint:
+<details open>
+    <summary><i><b>Klik hier om de code te zien/verbergen voor `views/soap.blade.php`</b></i></summary>
+    <p>
 
 ```php
 ...
@@ -264,4 +274,7 @@ Now we update the view to maken use of this endpoint:
     });
 </script>
 ```
+
+</p>
+</details>
 
