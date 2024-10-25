@@ -4,10 +4,10 @@ weight: 7
 author: Arne Duyver
 draft: false
 ---
-
+## 6: Demo 3
 Verder kunnen we onze laravel website uitbreiden met een eigen REST API gedefinieerd in laravel zelf (of in een andere laravel applicatie die op een andere server draait)
 
-Hiervoor maken we dan wel een LaravelUser model aan omdat we nu effectief de laravel database gaan gebruiken: `php artisan make:model FlaskUser -mc --Factory`. Met dit commando wordt er ook automatisch een migrationTable en Controller aangemaakt.
+Hiervoor maken we dan wel een LaravelUser model aan omdat we nu effectief de laravel database gaan gebruiken: `php artisan make:model LaravelUser -mc --Factory`. Met dit commando wordt er ook automatisch een migrationTable en Controller aangemaakt.
 
 In de controller gaan we nu dan de functionaliteit van onze REST API programmeren volledig analoog aan onze Flask implementatie alleen moeten we nu PHP specifieke syntax gebruiken:
 
@@ -159,7 +159,7 @@ Route::post('/laravelUsers', [LaravelUserController::class, 'createLaravelUser']
 Route::delete('/laravelUsers/{id}', [LaravelUserController::class, 'deleteLaravelUser']);
 ```
 
-We kunnen dan ook een andere view in ons hoofdproject gebruiken dat deze endpoints gebruikt in plaats van de Flask endpoints: `views/laravel_users.blade.php`
+We kunnen nu dan ook een de users view in ons hoofdproject aanpassen en deze endpoints gebruiken in plaats van de Flask endpoints: `views/users.blade.php`
 ```php
 <!DOCTYPE html>
 <html lang="en">

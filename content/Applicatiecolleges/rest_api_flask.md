@@ -5,6 +5,8 @@ author: Arne Duyver
 draft: false
 ---
 
+## 5: Demo 1
+
 We maken een voorbeeld van een eenvoudige Flask-applicatie die CORS en PyMySQL gebruikt om een REST API te creëren met volledige CRUD-functionaliteit. 
 
 Zorg ervoor dat je de vereiste pakketten installeert:

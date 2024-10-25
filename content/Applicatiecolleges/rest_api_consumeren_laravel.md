@@ -6,6 +6,7 @@ draft: false
 ---
 
 # REST api oproepen in Laravel vanuit de frontend met Javascript
+## 6: Demo 1
 Om een ​​Laravel-project te maken dat communiceert met de REST API met behulp van JavaScript in de frontend, moeten we volgende zaken doen:
 
 1. Laravel project aanmaken
@@ -164,6 +165,7 @@ Zorg ervoor dat je Flask applicatie aan het runnen is.
 Voeg een geslacht toe aan de gebruikers en pas alle nodige code aan in de Flask applicatie en de Laravel applicatie.
 
 # REST api oproepen in Laravel vanuit de backend met php (flask app en laravel in 1 docker-compose file)
+## 6: Demo 2
 We kunnen een extra route toevoegen in de `routes/web.php` naar `/usersBackend`. We maken hier weer een nieuwe view voor aan. De functionaliteit van het endpoint kunnen we volledig definiëren in `web.php`. Om met de requests te kunnen werken hebben we de Guzzle module nodig. Installeer deze via `composer require guzzlehttp/guzzle`
 
 We kunnen nu gelijkaardige HTML code gebruiken als bovenstaande, maar de javascript kan nu grotendeels weggelaten worden: `views/usersBackend.blade.php`. De view gaat nu van php automatisch een list van users meekrijgen, die we kunnen uilezen in blade.php files met: `$users`
@@ -219,7 +221,7 @@ Route::get('/usersBackend', function () {
 ## Models, controllers
 Willen we nu echter meer functionaliteit dan kunnen we best eigen endpoints in Laravel definiëren die op hun beurt een oproep gaan doen naar de Flask API. We laten onze frontend dan onze Laravel endpoints aanroepen om via de backend de call naar de Flask API uit te voeren. Hiervoor kunnen we best een Controller aanmaken die de calls doet naar de API. 
 
-Je kan een controller aanmaken via `php artisan make:controller LaravelUserController`. Het bestand bevindt zich nu in `app/Http/Controllers/FlaskUserController.php` en laten we er als volgend uitzien:
+Je kan een controller aanmaken via `php artisan make:controller FlaskUserController`. Het bestand bevindt zich nu in `app/Http/Controllers/FlaskUserController.php` en laten we er als volgend uitzien:
 
 ```php
 <?php
@@ -228,7 +230,6 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use GuzzleHttp\Client;
-use App\Models\FlaskUser;
 
 class FlaskUserController extends Controller
 {
@@ -244,7 +245,7 @@ class FlaskUserController extends Controller
     // GET all users
     public function index(Request $request)
     {
-        $response = $this->client->get('/api/flaskusers', [
+        $response = $this->client->get('/api/users', [
             'query' => ['pwd' => 'mypassword']
         ]);
 

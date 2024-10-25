@@ -191,7 +191,7 @@ Route::post('/soapAdd', function (Request $request) {
 
     $headers = [
         'Content-Type: text/xml; charset=utf-8',
-        'SOAPAction: "http://www.dneonline.com/calculator/Add"',
+        'SOAPAction: "http://tempuri.org/Add"',
     ];
 
     // Make SOAP request
