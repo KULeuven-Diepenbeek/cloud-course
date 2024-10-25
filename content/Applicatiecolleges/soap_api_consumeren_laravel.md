@@ -45,6 +45,7 @@ Om een ​​Laravel-project te maken dat communiceert met de REST API met behul
 4. Configureer routes
 
 ### Laravel project aanmaken
+#### 6: Demo 4
 ```bash
 composer create-project laravel/laravel consumeApi
 # change database type to 'mysql' in .env
@@ -59,6 +60,9 @@ We gebruiken JavaScript (met fetch) om de Flask REST API op te roepen.
 Maak een nieuwe lay-out als deze niet bestaat en voeg vervolgens de benodigde HTML-structuur en een tijdelijke aanduiding voor de inhoud toe: `views/soap.blade.php`.
 
 Je kan de [Wizdler extentie](https://chromewebstore.google.com/detail/wizdler/oebpmncolmhiapingjaagmapififiakb) gebruiken om na te gaan hoe de body er juist moet uitzien.
+<details open>
+    <summary><i><b>Klik hier om de code te zien/verbergen voor `views/soap.blade.php`</b></i></summary>
+    <p>
 
 ```php
 <!DOCTYPE html>
@@ -148,6 +152,10 @@ Je kan de [Wizdler extentie](https://chromewebstore.google.com/detail/wizdler/oe
 
 </html>
 ```
+
+</p>
+</details>
+
 
 ### Routes definiëren
 
