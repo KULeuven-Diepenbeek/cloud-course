@@ -45,7 +45,6 @@ Om een ​​Laravel-project te maken dat communiceert met de REST API met behul
 4. Configureer routes
 
 ### Laravel project aanmaken
-#### 6: Demo 4
 ```bash
 composer create-project laravel/laravel consumeApi
 # change database type to 'mysql' in .env
@@ -171,6 +170,7 @@ Route::get('/soapTest', function () {
 
 
 ## Call maken vanuit de backend anders CORS problemen
+### 6: Demo 4
 Dan moeten we een extra endpoint voorzien in de `routes/web.php`:
 
 <details open>
