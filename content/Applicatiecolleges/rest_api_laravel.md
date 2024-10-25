@@ -7,7 +7,7 @@ draft: false
 ## 6: Demo 3
 Verder kunnen we onze laravel website uitbreiden met een eigen REST API gedefinieerd in laravel zelf (of in een andere laravel applicatie die op een andere server draait)
 
-Hiervoor maken we dan wel een LaravelUser model aan omdat we nu effectief de laravel database gaan gebruiken: `php artisan make:model LaravelUser -mc --Factory`. Met dit commando wordt er ook automatisch een migrationTable en Controller aangemaakt.
+Hiervoor maken we dan wel een LaravelUser model aan omdat we nu effectief de laravel database gaan gebruiken: `php artisan make:model LaravelUser -mcf`. Met dit commando wordt er ook automatisch een migrationTable en Controller aangemaakt.
 
 In de controller gaan we nu dan de functionaliteit van onze REST API programmeren volledig analoog aan onze Flask implementatie alleen moeten we nu PHP specifieke syntax gebruiken:
 
