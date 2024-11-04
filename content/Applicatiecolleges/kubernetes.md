@@ -102,3 +102,9 @@ kubectl get all
 kubectl describe service <servicename>
 kubectl describe pod <podname>
 ```
+
+
+## Moeilijkheden met Kubernetes
+
+Het is moeilijk om over verschillende database pods een identieke state te garanderen. Daarom is het soms nuttig om de databases extern te beheren en via api calls je applicatie de juiste data te laten ophalen.
+Tegenwoordig bevatten hosted database solutions simpele methoden om backups en redundantie te voorzien. Dit moet je dan niet specifiek in Kubernetes opstellen. (Het is wel mogelijk dit op te stellen in Kubernetes!)
