@@ -1,6 +1,6 @@
 ---
 title: "Kubernetes"
-weight: 9
+weight: 10
 author: Arne Duyver
 draft: false
 ---
