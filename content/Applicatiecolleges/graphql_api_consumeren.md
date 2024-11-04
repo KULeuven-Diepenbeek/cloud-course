@@ -96,7 +96,8 @@ Route::get('/graphQl_1', function () {
     $query = 'query ExampleQuery {
         company {
           ceo
-        }';
+        }
+    }';
     # Define the variables, if none needed make this an empty array
     $variables = [];
     # Execute the request
