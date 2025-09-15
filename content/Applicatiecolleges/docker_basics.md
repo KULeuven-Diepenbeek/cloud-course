@@ -38,7 +38,7 @@ Het is echter een beetje stom dat we een terminal moeten openhouden om een conta
 ```bash
 $ docker run -d dockersamples/static-site:latest
 ```
-- we kunnen een lopende container stoppen door het volgende commando te gebruiken. `$ docker stop <container>` waarbij `<container>` (een deel) van de container id moet zijn OF de container naam.
+- we kunnen een lopende container stoppen door het volgende commando te gebruiken. `$ docker stop <container>` waarbij `<container>` (een deel van) de container id moet zijn OF de container naam.
 
 _Voer dezelfde stappen als in de demo zelf uit, maar gebruik nu de docker container in detached mode._
 
@@ -46,7 +46,7 @@ Je zal nu ongetwijfeld opmerken dat we steeds containers bijmaken in plaats van 
 ```bash
 $ docker rm <container>
 ```
-Wil je een gestopte container toch terug starten, gebruik dan niet het `run` commando maar het `start` commando: `$ docker rm <container>`
+Wil je een gestopte container toch terug starten, gebruik dan niet het `run` commando maar het `start` commando: `$ docker start <container>`
 
 Aangezien docker zelf soms rare/cryptische namen geeft aan de containers, is het een goede gewoonte om je containers steeds zelf een overzichtelijke naam te geven. Dit kunnen we doen zoals in onderstaand voorbeeld met de `--name` flag:
 ```bash
@@ -55,7 +55,7 @@ $ docker run --name static_website -d dockersamples/static-site:latest
 Merk op dat elke container een unieke naam moet hebben (met uitzondering van namen als onderdeel van een service in docker-compose, maar hier komen we later nog op terug)
 
 #### Binding ports
-Je zal ongetwijfeld al gemerkt hebben dat het 'hello-world' voorbeeld geen poort gebruikt, maar het 'static website' voorbeeld wel. Voor zij die 'Full-Stack Web Development' gevolgd hebben weten ongetwijfeld al waarom. Dit is natuurlijk de poort waarop je de geserveerde website kan raadplegen.
+Je zal ongetwijfeld al gemerkt hebben dat het 'hello-world' voorbeeld geen poort gebruikt, maar het 'static website' voorbeeld wel. Zij die 'Full-Stack Web Development' gevolgd hebben, weten ongetwijfeld al waarom. Dit is natuurlijk de poort waarop je de geserveerde website kan raadplegen.
 
 Probeer eens naar het opgegeven adres te surfen met je webbrowser. Spoiler alarm ... je zal niets te zien krijgen. Dit komt omdat de poort opengesteld is in de container, maar niet in onze host. Hier komt dan ook het zeer mooie van docker tevoorschijn: We kunnen poorten van de container verbinden met poorten van de host EN nog mooier, dit hoeft niet dezelfde poort te zijn. Als je nog niet helemaal begrijpt waarom dit zo een geweldige feature is, geen probleem ik leg het hieronder uit nadat we zelf even de poorten verbinden. Dit doen we met de `-p` flag ( Voor zij die 'XAMP' nog hebben opstaan op hun pc zet die eerst af):
 ```bash
@@ -94,7 +94,7 @@ Laten we dit even opsplitsen:
 
 Wat is nu juist een omgevingsvariabele/environment variable? Dit zijn simpelweg sleutels/keys die opgeslagen zijn in je computersysteem die je dan een bepaalde waarde/value kan toekennen. Of ze krijgen automatisch een waarde dankzij het systeem.
 
-In het voorbeeld is de waarde van `$AUTHOR` standaard ingesteld als 'Docker'. We kunnen environment variables van containers echter aanmaken en aanpassen bij het opstarten van de container met de `-e` flag. Zo kunnen we onze eigen naam gebruik als author in het voorbeeld en komt onze eigen naam tevoorschijn op de website:
+In het voorbeeld is de waarde van `$AUTHOR` standaard ingesteld als 'Docker'. We kunnen environment variables van containers echter aanmaken en aanpassen bij het opstarten van de container met de `-e` flag. Zo kunnen we onze eigen naam gebruiken als author in het voorbeeld en komt onze eigen naam tevoorschijn op de website:
 ```bash
 $ docker run --name static_website -p 9090:80 -e AUTHOR=YourName -d dockersamples/static-site:latest
 ```
@@ -110,9 +110,9 @@ We specificeren hier weer dat we met een 'interactive' 'tty' terminal het comman
 _Maak met het volgende command een nieuwe html file aan `$ touch test.html` en steek als tekst in deze file 'hello there' via volgende commando `$ echo "hello there" > test.html`. Bekijk of het gelukt is door `/test.html` achter de url toe te voegen_
 
 ##### Attach VSCode
-We kunnen echter ook een gehele VSCode omgeving opstarten in onze container en zo alle files aanpassen. (Let op: die VSCode instantie is eigenlijk een VSCode server die draait op je container dus die neemt je extensies en settings dus niet over.)
+We kunnen echter ook een gehele VSCode omgeving opstarten in onze container en zo alle files aanpassen. (Let op: die VSCode instantie is eigenlijk een VSCode server die draait binnenin je container en neemt je extensies en settings dus niet over.)
 
-Je doet dit door op het docker-icoon te klikken in VSCode. Dan zie je alle containers en images op je systeem. Je ziet ook wel containers runnen en welke niet. Je kan via deze weg containers dus ook starten en stoppen (en nog veel meer). Nu zijn we echter vooral geïnteresseerd in de optie 'Attach VSCode'. Doe hiervoor een rechtermuisklik op je static_website container en klik op 'Attach VSCode'. Merk op dat je ook een simpele shell kan attachen. Je kan nu in het nieuwe VSCode scherm dat verschijnt mappen van in de container openen, files aanpassen, terminals in de container openen ...
+Je doet dit door op het docker-icoon te klikken in VSCode. Dan zie je alle containers en images op je systeem. Je ziet ook welke containers runnen en welke niet. Je kan via deze weg containers dus ook starten en stoppen (en nog veel meer). Nu zijn we echter vooral geïnteresseerd in de optie 'Attach VSCode'. Doe hiervoor een rechtermuisklik op je static_website container en klik op 'Attach VSCode'. Merk op dat je ook een simpele shell kan attachen. Je kan nu in het nieuwe VSCode scherm dat verschijnt mappen van in de container openen, files aanpassen, terminals in de container openen ...
 
 _Maak nu nog meer aanpassingen in de test.html file en kijk of ze getoond worden op de website._
 
@@ -134,7 +134,7 @@ Je moet docker volumes dan ook apart verwijderen als je dat wil:
 - list alle volumes: `$ docker volume ls`
 - remove een volume: `$ docker volume rm <volume_name>`
 
-Je kan in de plaats van docker een docker volume te koppelen ook een directory van je host koppelen aan de container. Hiervoor gebruik je dan het absolute pad van de host directory (in sommige gevallen kan je ook een relatief pad gebruiken maar een absoluut pad is soms veiliger). De host directory komt voor de ':' en de container directory erachter:
+Je kan in de plaats van een docker volume te koppelen ook een directory van je host koppelen aan de container. Hiervoor gebruik je dan het absolute pad van de host directory (in sommige gevallen kan je ook een relatief pad gebruiken maar een absoluut pad is soms veiliger). De host directory komt voor de ':' en de container directory erachter:
 ```bash
 $ docker run --name static_website -p 9090:80 -e AUTHOR=YourName -v ${PWD}/static_website_host:/usr/share/nginx/html -d dockersamples/static-site:latest
 ```
