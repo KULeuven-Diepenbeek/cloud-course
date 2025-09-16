@@ -2,7 +2,7 @@
 title: "Docker-compose services"
 weight: 3
 author: Arne Duyver
-draft: false
+draft: true
 ---
 
 Met [exercise 3]({{< ref "/Applicatiecolleges/docker_basics#exercise-3" >}} "Exercise 3") zal je ongetwijfeld al gemerkt hebben dat het moeilijk is om twee containers met elkaar te laten praten. Dit is natuurlijk de bedoeling want we willen verschillende containers namelijk afschermen van elkaar. 

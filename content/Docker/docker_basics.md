@@ -10,7 +10,9 @@ draft: false
 ```bash
 $ docker run hello-world
 ```
-Merk op dat de container automatisch stopt.
+Het `docker run` commando start een nieuwe container op basis van een image. Je kunt hiermee opties meegeven zoals poortkoppelingen en omgevingsvariabelen, zoals we verder nog gaan zien.
+
+_Merk op dat de container automatisch stopt._
 
 ### Demo 2: Static Website
 Run de volgende container:
@@ -18,7 +20,7 @@ Run de volgende container:
 $ docker run dockersamples/static-site:latest
 ```
 Merk op dat:
-- de terminal geblokkeerd wordt. Waarom is dit? Omdat de container een commando uitvoert dat oneindig lang runt.
+- de terminal geblokkeerd wordt. Waarom is dit? Omdat de container (op basis van die image) een commando uitvoert dat oneindig lang runt.
 - we kunnen kijken welke containers allemaal actief zijn via volgend commando `$ docker ps`. (hiervoor moet je dus wel een nieuwe terminal gebruiken)
 - we in het menu dat verschijnt heel wat info over de container kunnen zien zoals: de container ID, de image name, het commando dat gerunt wordt, wanneer de container aangemaakt werd, hoelang de container al actief is, welke poorten gebruikt worden door de container en ten slotte de naam van de container.
 ```bash

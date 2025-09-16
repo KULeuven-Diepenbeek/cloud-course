@@ -2,7 +2,7 @@
 title: "Kubernetes"
 weight: 10
 author: Arne Duyver
-draft: false
+draft: true
 ---
 
 ## Wat is Kubernetes?

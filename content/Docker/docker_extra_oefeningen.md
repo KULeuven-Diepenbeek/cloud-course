@@ -2,7 +2,7 @@
 title: "Docker extra oefeningen"
 weight: 4
 author: Arne Duyver
-draft: false
+draft: true
 ---
 
 1. Containers with a GUI: finding [the right image](https://hub.docker.com/r/kasmweb/ubuntu-bionic-desktop)
