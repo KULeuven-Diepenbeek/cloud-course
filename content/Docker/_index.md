@@ -6,6 +6,7 @@ draft: false
 ---
 
 ## Inleiding tot Microservices en Docker
+<!-- TODO voeg afbeeldingen toe bij de uitleg -->
 
 ### Wat zijn Microservices?
 
