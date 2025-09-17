@@ -5,7 +5,7 @@ author: Arne Duyver
 draft: false
 ---
 
-### Overview of Docker Commands
+### Overview of [Docker](https://docs.docker.com/) Commands
 
 ```bash
 # Download/pull an image
@@ -46,11 +46,10 @@ $ docker volume create <volumename>
 $ docker exec -it <containername> /bin/bash
 ```
 
-### Docker-compose.yml example/template
+### [Docker-compose.yml example/template](https://docs.docker.com/compose/)
 Simple example:
 ```yml
 # docker-compose.yml
-version: '3.8'
 
 services:
   static_website:

@@ -22,7 +22,7 @@ Academiejaar 2025---2026.
 
 ## _Cursus noties_
 
-Er worden telkens blokken van 2 uur ingepland voor dit vak. Er zijn geen traditionele hoorcolleges voorzien, maar we splitsen de content wel op in meer theoretische lessen en meer praktische lessen. Alle noties zijn via deze website te raadplegen (tenzij anders vermeld).
+Er worden telkens blokken van 2 uur ingepland voor dit vak. Er zijn geen traditionele hoorcolleges voorzien, maar we splitsen de content wel op in meer theoretische lessen en meer praktische lessen. Alle notities voor de applicatiecolleges zijn via deze website te raadplegen (tenzij anders vermeld).
 
 <!-- ### Inhoudsopgave
 
@@ -49,7 +49,7 @@ Dit opleidingsonderdeel focust op ... -->
 - Basiskennis van programmeren
 - Besturingssystemen en C
 - Databases
-- Software Engineering Skills
+- Software Engineering Skills (cmdline, linux, git ...)
 
 #### Doelstellingen
 
