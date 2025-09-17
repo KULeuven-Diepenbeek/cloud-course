@@ -5,26 +5,31 @@ author: Arne Duyver
 
 # Cloud Computing & Toepassingen
 
-Academiejaar 2024---2025.
+Academiejaar 2025---2026.
 
 
-## _Planning_
+## _Planning applicatiecolleges_
 
 | nr  | datum         | onderwerp                     |
 |-----|---------------|-------------------------------|
-| 01  | ma 16-09-2024 | Docker Basics                 |
-| 02  | ma 23-09-2024 | Docker build files & networks |
+| 01  | di 16-09-2025 | Docker Basics                 |
+| 02  | ma 22-09-2025 | Docker build files & networks |
+| 03  | ma 29-09-2025 | Kubernetes intro              |
+| 04  | ma 06-10-2025 | REST api maken (met Flask)    |
+| 05  | ma 13-10-2025 | REST api consumeren + maken (Laravel) |
+| 06  | ma 20-10-2025 | SOAP + GraphQl api consumeren (Laravel) |
+| 07  | ma 03-11-2025 | Extra les als de lessen uitlopen en/of voor extra vragen of hulp bij project |
 
 ## _Cursus noties_
 
 Er worden telkens blokken van 2 uur ingepland voor dit vak. Er zijn geen traditionele hoorcolleges voorzien, maar we splitsen de content wel op in meer theoretische lessen en meer praktische lessen. Alle noties zijn via deze website te raadplegen (tenzij anders vermeld).
 
-### Inhoudsopgave
+<!-- ### Inhoudsopgave
 
 - Applicatiecolleges:
-    1. [Docker Basics](/applicatiecolleges/docker_basics/) 
-    1. [Docker build files](/applicatiecolleges/docker_build_files/)
-    1. [Docker networks](/applicatiecolleges/docker-compose_services/)
+    1. [Docker Basics](/Docker/docker_basics/) 
+    2. [Docker build files](/Docker/docker_build_files/)
+    3. [Docker networks](/Docker/docker-compose_services/) -->
     
 
 ## Syllabus
@@ -48,7 +53,7 @@ Dit opleidingsonderdeel focust op ... -->
 
 #### Doelstellingen
 
-Zie ook [Studiegids UHasselt](https://studiegidswww.uhasselt.be/opleidingsonderdeel.aspx?a=2024&i=4090)
+Zie ook [Studiegids UHasselt](https://studiegidswww.uhasselt.be/opleidingsonderdeel.aspx?a=2025&i=5553)
     
 De context en het overzicht worden aangereikt in de eerste lessen van dit vak.
 

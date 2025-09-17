@@ -160,10 +160,11 @@ _Speel eens even met deze methoden en kijk wanneer data verloren gaat, hoe de sy
 
 ### Demo 3: Docker compose
 In plaats dat we steeds een lang run commando moeten runnen zou het handig zijn al deze instellingen in een soort script te verzamelen. Dit kan en zo een file heet een `docker-compose.yml` file. We gebruiken yaml syntax om de juiste instellingen op te stellen. Merk hieronder ook op dat we gebruik maken van **services** hier komen we later nog op terug omdat we in deze compose file ook meerdere containers in een keer kunnen opstarten en nog veel meer.
+
+**Opgelet: een yml/yaml file is zeer gevoelig over de indentatie van de code net zoals python. Let hier dus op en als je tabs gebruikt in plaats van spaties, of andersom doe dit dan ook consistent.**
+
 ```yml
 # docker-compose.yml
-version: '3.8'
-
 services:
   static_website:
     image: dockersamples/static-site:latest
@@ -184,3 +185,4 @@ volumes:
 - Stop en remove de container(s) met `$ docker-compose down`.
 - (meer restart policies vind je [hier](https://www.baeldung.com/ops/docker-compose-restart-policies))
 
+_Ter info: in vroegere versies van docker-compose was je verplicht een versie mee te geven bovenaan de file: `version: '3.8'`. Dit is echter niet meer het geval, sterker nog nu mag je zelfs geen versie meer hebben staan._
