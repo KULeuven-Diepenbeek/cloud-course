@@ -50,11 +50,11 @@ $ docker build . -t my_image_name
 
 Nu kan je containers starten op basis van jouw image `my_image_name`.
 
-**Let op: De image wordt gecashed voor een performante opstart van containers, dit wil zeggen dat als je nadat je een image 1 keer gebuild hebt, wijzigingen aanbrengt in de `Dockerfile` deze wijzigingen niet toegepast worden als je de vorige versie van je image niet hebt verwijderd**
+**Let op: De image wordt gecashed voor een performante opstart van containers, dit wil zeggen dat als je, nadat je een image 1 keer gebuild hebt, wijzigingen aanbrengt in de `Dockerfile` deze wijzigingen niet toegepast worden als je de vorige versie van je image niet hebt verwijderd**
 
 #### Wat voer ik uit in de dockerfile, wat in het entrypoint commando en wat binnen de container zelf.
 - Alle commando's in de dockerfile worden 1 keer uitgevoerd bij het builden van de image. Hier kiezen we dus alles wat ons operating systeem instelt naar onze noden. Bijvoorbeeld configuratiefiles instellen, programma's installeren ... Dingen die dus niet snel veranderen. (Hier ga je ook vaak git repositories pullen van github.)
-- Commando's in de entrypoint zullen bij het opstarten van de container steeds opnieuw uitgevoerd worden. Hier plaats je dus op het einde het commando dat als laatste moet blijven runnen op de container. Het is echter ook interessant om hier bijvoorbeeld dependencies te laten installeren omdat dit wel eens kan veranderen en zo hoef je niet steeds opnieuw een image te builden. Bijvoorbeeld voor onze Flask app ziet de `entrypoint.sh` er als volgt uit:
+- Commando's in de entrypoint zullen bij het opstarten van de container steeds opnieuw uitgevoerd worden. Hier plaats je dus op het einde het commando dat als laatste moet blijven runnen op de container. Het is echter ook interessant om hier bijvoorbeeld dependencies te laten installeren omdat dit wel eens kan veranderen en zo hoef je niet steeds opnieuw een image te builden (zie dan wel dat je requirements.txt in een volume zit dat gekoppeld is aan een folder in je host). Bijvoorbeeld voor onze Flask app ziet de `entrypoint.sh` er als volgt uit:
 ```bash
 #!/bin/bash
 
@@ -65,22 +65,20 @@ pip3 install --no-cache-dir --break-system-packages -r ./requirements.txt
 tail -f /dev/null
 ```
 
-**Het commando `tail -f /dev/null` is een speciaal commando dat je container gewoon oneindig laat draaien zonder iets te doen. Dit is handig voor development omgevingen omdat je daar zelf services wil starten. Voor onze live Flask environment zal dit niet nodig zijn en starten we gewoon onze Flask service met `python3 app.py`.**
+**Het commando `tail -f /dev/null` is een speciaal commando dat je container gewoon oneindig laat draaien zonder iets te doen. Dit is handig voor DEVELOPMENT omgevingen omdat je daar zelf services wil starten. Voor onze LIVE Flask environment zal dit niet nodig zijn en starten we gewoon onze Flask service met `python3 app.py`.**
 
-- Commando's die je binnen in de container zelf uitvoert kan vanalles zijn maar let hierbij op dat alle systeem veranderingen die je maakt best ook in de image bijkomen. Andere specifieke veranderingen kan je namelijk opslaan door gebruik te maken van docker volumes. 
+- Commando's die je binnen in de container zelf uitvoert kan vanalles zijn, maar let hierbij op dat alle systeem veranderingen die je maakt best ook in de image bijkomen. Andere specifieke veranderingen kan je namelijk opslaan door gebruik te maken van docker volumes. 
 
 _Tip: Weet je niet welke programma's je image allemaal gaat nodig hebben of hoe je ze correct installeert? Voer dan de commando's gewoon eerst in de container uit tot alles werkt en neem dan die commando's over in je `Dockerfile`_
 
 
 #### Wat/welke files sla ik op in de image vs docker volumes.
 - Gelijkaardig aan de commando's moet je alle systeem files en dergelijk initialiseren in de image.
-- Aanpassingen die dan per containers anders zullen zijn kan je opslaan met docker volumes.
+- Aanpassingen die dan per containers anders zullen zijn, kan je opslaan met docker volumes.
 
 
 #### de docker-compose file
 ```yml
-version: '3.7'
-
 services:
   docker_build_files_demo1_pythondev:
     container_name: docker_build_files_demo1_pythondev
@@ -120,8 +118,6 @@ python3 app.py
 ```
 #### docker-compose.yml
 ```yml
-version: '3.7'
-
 services:
   docker_build_files_demo2_pythonlive:
     container_name: docker_build_files_demo2_pythonlive

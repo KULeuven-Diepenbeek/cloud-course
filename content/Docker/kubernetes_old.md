@@ -7,13 +7,13 @@ draft: true
 
 ## Wat is Kubernetes?
 
-Kubernetes (afgekort als K8s) is een open-source platform ontworpen voor het automatiseren van de uitrol, schaalvergroting en beheer van gecontaineriseerde applicaties. Het helpt ontwikkelaars en operationele teams om applicaties in containers (zoals Docker) te beheren en te schalen. Kubernetes biedt een flexibele, gedistribueerde infrastructuur waarin je eenvoudig verschillende services kunt orkestreren en beheren.
+Kubernetes (afgekort als K8s) is een open-source platform ontworpen voor het automatiseren van de uitrol, schaalvergroting en beheer van containerized applicaties. Het helpt developers en operationele teams om applicaties in containers (zoals Docker) te beheren en te schalen. Kubernetes biedt een flexibele, gedistribueerde infrastructuur waarin je eenvoudig verschillende services kunt orkestreren en beheren.
 
 ### Kernconcepten van Kubernetes:
 
 - **Pods**: De kleinste eenheid in Kubernetes die een of meerdere containers bevat. Pods draaien op nodes in een cluster.
 - **Nodes**: Fysieke of virtuele machines waarop containers draaien. Een Kubernetes-cluster bestaat uit meerdere nodes.
-- **Cluster**: Een verzameling nodes beheerd door Kubernetes, waarin je je gecontaineriseerde applicaties kunt draaien.
+- **Cluster**: Een verzameling nodes beheerd door Kubernetes, waarin je je containerized applicaties kunt draaien.
 - **Deployment**: Een object dat ervoor zorgt dat je applicaties in een bepaalde staat blijven, door pods te schalen en up-to-date te houden.
 - **Service**: Een abstractie die een stabiel netwerk-IP biedt om toegang te krijgen tot een set pods.
 - **Namespace**: Een mechanisme voor logische scheiding in een cluster, zodat meerdere teams of projecten resources kunnen delen.

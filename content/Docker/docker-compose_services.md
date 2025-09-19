@@ -5,7 +5,7 @@ author: Arne Duyver
 draft: true
 ---
 
-Met [exercise 3]({{< ref "/Applicatiecolleges/docker_basics#exercise-3" >}} "Exercise 3") zal je ongetwijfeld al gemerkt hebben dat het moeilijk is om twee containers met elkaar te laten praten. Dit is natuurlijk de bedoeling want we willen verschillende containers namelijk afschermen van elkaar. 
+Standaard in docker is het moeilijk om twee containers met elkaar te laten praten. Dit is natuurlijk de bedoeling want we willen verschillende containers namelijk afschermen van elkaar. 
 
 Om toch te verbinden met de host kan je volgende adressen gebruiken:
 - op Windows: `host.docker.local`
@@ -22,8 +22,6 @@ Wanneer je meerdere services plaatst in dezelfde docker-compose file wordt autom
 
 #### docker-compose file
 ```yml
-version: '3.8'
-
 services:
   server:
     container_name: flask_server
