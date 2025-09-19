@@ -79,7 +79,7 @@ draft: true
 <details>
 <summary>Installatie k3d</summary>
 
-1. Download binary: [https://k3d.io/v5.6.0/#installation](https://k3d.io/v5.6.0/#installation) (choco install k3d)
+1. Download binary: [https://k3d.io/v5.6.0/#installation](https://k3d.io/v5.6.0/#installation) (choco install k3d) OF [k3d.exe via github](https://github.com/k3d-io/k3d/releases)
 2. Voeg `k3d.exe` toe aan PATH.
 3. Test:
 
@@ -99,10 +99,12 @@ Laptop A creëert een k3s cluster dat externe nodes kan accepteren.
 
 ```powershell
 # Vervang <LAPTOP_A_IP> door het werkelijke IP adres van Laptop A (ipconfig)
-k3d cluster create demo-cluster --servers 1 --agents 1 -p "8080:80@loadbalancer" --api-port <LAPTOP_A_IP>:6443
+k3d cluster create demo-cluster --servers 1 --agents 0 -p "8080:30080@loadbalancer" --api-port <LAPTOP_A_IP>:6443
 ```
+<!-- k3d cluster create demo-cluster --servers 1 --agents 1 -p "8080:80@loadbalancer" --api-port 10.209.145.166:6443 -->
 
 Om op te ruimen: `k3d cluster delete demo-cluster`
+Na restart connection refused doe dan even: `k3d cluster stop demo-cluster; k3d cluster start demo-cluster`
 
 * `--servers 1`: de control plane (master).
 * `--agents 1`: één worker node op Laptop A.
@@ -129,13 +131,14 @@ k3d-demo-cluster-server-0   Ready    control-plane,master   10m   v1.31.5+k3s1
 
 Laptop B join’t het cluster van Laptop A.
 
+<!-- TODO: niet meet nodig
 1. **Op Laptop A**: Exporteer de clusterconfig:
 
    ```powershell
    k3d kubeconfig get demo-cluster > kubeconfig.yaml
-   ```
+   ``` -->
 
-2. **Op Laptop A**: Haal de node token op:
+1. **Op Laptop A**: Haal de node token op:
 
    ```powershell
    docker exec k3d-demo-cluster-server-0 cat /var/lib/rancher/k3s/server/node-token
@@ -144,13 +147,14 @@ Laptop B join’t het cluster van Laptop A.
    - `k3d-demo-cluster-server-0` - The name of the k3d server container
    - `cat /var/lib/rancher/k3s/server/node-token` - Reads the actual join token file that k3s creates
 
-3. Deel `kubeconfig.yaml` met Laptop B (via USB of file share).
+2. Deel `kubeconfig.yaml` met Laptop B (via USB of file share).
 
-4. **Op Laptop B**: Join het cluster als externe node (vervang <LAPTOP_A_IP> en <TOKEN>):
+3. **Op Laptop B**: Join het cluster als externe node (vervang <LAPTOP_A_IP> en <TOKEN>):
 
      ```powershell
-     docker run -d --name k3s-agent --restart=unless-stopped --privileged rancher/k3s:latest agent --server https://<LAPTOP_A_IP>:6443 --token <TOKEN>
+     docker run -d --name k3s-agent --restart=unless-stopped --privileged -p 30080:30080 -p 10250:10250 rancher/k3s:latest agent --server https://<LAPTOP_A_IP>:6443 --token <TOKEN>
      ```
+     <!-- docker run -d --name k3s-agent --restart=unless-stopped --privileged rancher/k3s:latest agent --server https://10.209.145.166:6443 --token K108428e10ef66107779bbba82f045d33b7000db988d83bba28fe43e9f2e2de5a72::server:tzBcpyicksiZPvbylXqi -->
 
 Check op Laptop A:
 
@@ -169,7 +173,7 @@ k3d-demo-cluster-server-0   Ready      control-plane,master   10m   v1.31.5+k3s1
 ```
 
 ---
-
+<!-- TODO: niet meer nodig want halen image van dockerhub
 ## Stap 3 — Flask webapp deployen
 
 1. **Maak de Flask app met connectie tracking**:
@@ -178,60 +182,105 @@ k3d-demo-cluster-server-0   Ready      control-plane,master   10m   v1.31.5+k3s1
 <summary>app.py</summary>
 
 ```python
-from flask import Flask, Response
-import threading
-import time
-import socket
+# app.py
 import os
+import uuid
+from flask import Flask, render_template_string, request
+from flask_socketio import SocketIO, emit
+
+# Identify this server/pod (helps when running multiple pods)
+SERVER_ID = os.environ.get("POD_NAME") or os.environ.get("HOSTNAME") or str(uuid.uuid4())[:8]
 
 app = Flask(__name__)
-active_connections = 0
-connection_lock = threading.Lock()
+# allow CORS from anywhere for easy testing in cluster
+socketio = SocketIO(app, cors_allowed_origins="*")
 
-@app.route('/')
+# track connected client session ids
+clients = set()
+
+INDEX_HTML = """
+<!doctype html>
+<html>
+<head>
+  <meta charset="utf-8" />
+  <title>Connections on {{ server_id }}</title>
+  <style>
+    body { font-family: system-ui, -apple-system, "Segoe UI", Roboto, Arial; padding: 2rem; }
+    .card { padding: 1.2rem; border-radius: 8px; box-shadow: 0 6px 18px rgba(0,0,0,0.08); max-width: 460px; }
+    .big { font-size: 64px; font-weight: 700; margin: .2rem 0; }
+    .muted { color: #666; }
+  </style>
+</head>
+<body>
+  <div class="card">
+    <div class="muted">Server / Pod:</div>
+    <div><strong id="server">{{ server_id }}</strong></div>
+    <hr/>
+    <div class="muted">Connected tabs (this pod)</div>
+    <div class="big" id="count">—</div>
+    <div class="muted" id="sid">session: —</div>
+    <p class="muted">Open more tabs (same browser or other browsers) to increase the count. Each tab maintains its own websocket connection.</p>
+  </div>
+
+  <script src="https://cdn.socket.io/4.7.5/socket.io.min.js"></script>
+  <script>
+    const socket = io({ transports: ["websocket"] });
+
+    socket.on("connect", () => {
+      document.getElementById("sid").textContent = "session: " + socket.id;
+    });
+
+    socket.on("count", (data) => {
+      document.getElementById("count").textContent = data.count;
+      document.getElementById("server").textContent = data.server || "{{ server_id }}";
+    });
+
+    socket.on("disconnect", () => {
+      document.getElementById("count").textContent = "disconnected";
+    });
+  </script>
+</body>
+</html>
+"""
+
+@app.route("/")
 def index():
-    global active_connections
-    
-    with connection_lock:
-        active_connections += 1
-        current_count = active_connections
-    
-    hostname = socket.gethostname()
-    pod_name = os.environ.get('HOSTNAME', hostname)
-    
-    def generate():
-        try:
-            while True:
-                with connection_lock:
-                    count = active_connections
-                
-                html = f"""
-                <html><head>
-                <meta http-equiv="refresh" content="2">
-                <title>Flask Load Balancer Demo</title>
-                </head><body>
-                <h1>Pod: {pod_name}</h1>
-                <h2>Active connections on this pod: {count}</h2>
-                <p>Refresh every 2 seconds...</p>
-                <p>Time: {time.strftime('%H:%M:%S')}</p>
-                </body></html>
-                """
-                
-                yield f"data: {html}\n\n"
-                time.sleep(2)
-        finally:
-            with connection_lock:
-                active_connections -= 1
-    
-    return Response(generate(), mimetype='text/html')
+    return render_template_string(INDEX_HTML, server_id=SERVER_ID)
 
-if __name__ == '__main__':
-    app.run(host='0.0.0.0', port=5000, threaded=True)
+@socketio.on("connect")
+def handle_connect():
+    sid = request.sid
+    clients.add(sid)
+    emit("count", {"count": len(clients), "server": SERVER_ID}, broadcast=True)
+
+@socketio.on("disconnect")
+def handle_disconnect():
+    sid = request.sid
+    clients.discard(sid)
+    emit("count", {"count": len(clients), "server": SERVER_ID}, broadcast=True)
+
+if __name__ == "__main__":
+    import eventlet
+    import eventlet.wsgi
+    socketio.run(app, host="0.0.0.0", port=5000)
 ```
 
 </details>
 
-2. **Maak een Dockerfile**:
+2. **Maak requirements.txt**:
+
+<details>
+<summary>requirements.txt</summary>
+
+```
+flask
+flask-socketio
+eventlet
+```
+
+</details>
+
+3. **Maak een Dockerfile**:
 
 <details>
 <summary>Dockerfile</summary>
@@ -258,17 +307,6 @@ CMD ["python", "app.py"]
 
 </details>
 
-3. **Maak requirements.txt**:
-
-<details>
-<summary>requirements.txt</summary>
-
-```
-Flask==2.3.3
-Werkzeug==2.3.7
-```
-
-</details>
 
 4. **Bouw de Flask image lokaal op Laptop A**:
    ```powershell
@@ -280,9 +318,10 @@ Werkzeug==2.3.7
    k3d image import flask-counter:latest -c demo-cluster
    ```
    
-   Dit zorgt ervoor dat alle nodes in het cluster (inclusief Laptop B) toegang hebben tot de image.
+   Dit zorgt ervoor dat alle nodes in het cluster (inclusief Laptop B) toegang hebben tot de image. 
+-->
 
-6. **Maak flask-app.yaml**:
+## Stap 3 —  Maak `flask-app.yaml`en deploy:
 
 <details>
 <summary>flask-app.yaml</summary>
@@ -304,8 +343,7 @@ spec:
     spec:
       containers:
       - name: flask
-        image: flask-counter:latest
-        imagePullPolicy: Never  # Belangrijk: gebruik lokale image
+        image: arneduyver/loadbalancetester-flask:latest
         ports:
         - containerPort: 5000
 ---
@@ -330,6 +368,7 @@ Deploy:
 kubectl apply -f flask-app.yaml
 kubectl get pods -o wide
 ```
+Om op te ruimen: `kubectl delete -f flask-app.yaml`
 
 ### Uitleg flask-app.yaml configuratie
 
@@ -351,6 +390,9 @@ Het YAML bestand bevat twee Kubernetes objecten:
 
 => **Resultaat**: Kubernetes start 2 Flask pods en verdeelt automatisch verkeer tussen beide.
 
+
+<!-- TODO? : kubectl port-forward pod/flask-app-5ffbc584f7-g84b8 8085:5000 
+svclb = “service load balancer” used by k3d to emulate a cloud LoadBalancer for Kubernetes Services of type LoadBalancer. svclb is an emulator — not a full cloud LB. It only proxies where it can reach the node/container endpoints. That’s why it didn’t forward to your laptop B unless laptop B exposed NodePort on a reachable host interface.-->
 ---
 
 ## Stap 4 — Test load balancing met persistente connecties
@@ -369,12 +411,13 @@ Open 20 browser tabs op laptop A met een verbinding naar `http://localhost:8080`
 
 ---
 
-## Stap 5 — Node crash simuleren
+## Stap 5 — Node crash simuleren <!-- TODO: kubectl delete pod <pod-name> -->
 
 1. **Terwijl de 20 connecties nog actief zijn**, crash Laptop B:
 
    **Op Laptop B**:
    ```powershell
+   
    docker stop k3s-agent
    docker rm k3s-agent
    ```
