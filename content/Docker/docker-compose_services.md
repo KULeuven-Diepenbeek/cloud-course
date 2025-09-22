@@ -2,7 +2,7 @@
 title: "Docker-compose services"
 weight: 3
 author: Arne Duyver
-draft: true
+draft: false
 ---
 
 Standaard in docker is het moeilijk om twee containers met elkaar te laten praten. Dit is natuurlijk de bedoeling want we willen verschillende containers namelijk afschermen van elkaar. 
@@ -14,11 +14,11 @@ Om toch te verbinden met de host kan je volgende adressen gebruiken:
 ### Demo 1: Connect server to database
 
 ### Networking in docker
-Het default netwerk dat docker gebruikt is van het type "bridge" en vormt letterlijk een brug tussen de host en de container. Elke container waarvoor je zelf geen specifiek netwerk instelt zal de "default bridge" gebruiken. Je kan zelf netwerken aanmaken en containers aan verbinden. Er bestaan verschillende types, maar degene die wij het meeste gaan gebruiken is de bridge. Andere interessante types zijn host (laat de container runnen alsof het letterlijk een deel vormt van het host netwerk. Container gebruikt dan dezelfde poorten als de host) en macvlan. Dit laatste type is redelijk complex maar zorgt ervoor dat je container op je (wifi)netwerk als een apart device beschouwd wordt met een eigen ip-adres. We gaan hier niet verder op in maar volgende video geeft een mooi overzicht van de verschillende mogelijkheden: [Docker networking - You need to learn it](https://www.youtube.com/watch?v=bKFMS5C4CG0)
+Het default netwerk dat docker gebruikt is van het type "**bridge**" en vormt letterlijk een brug tussen de host en de container. Elke container waarvoor je zelf geen specifiek netwerk instelt zal de "default bridge" gebruiken. Je kan zelf netwerken aanmaken en containers aan verbinden. Er bestaan verschillende types, maar degene die wij het meeste gaan gebruiken is de bridge. Andere interessante types zijn **host** (laat de container runnen alsof het letterlijk een deel vormt van het host netwerk. Container gebruikt dan dezelfde poorten als de host) en **macvlan**. Dit laatste type is redelijk complex maar zorgt ervoor dat je container op je (wifi)netwerk als een apart device beschouwd wordt met een eigen ip-adres. We gaan hier niet verder op in maar volgende video geeft een mooi overzicht van de verschillende mogelijkheden: [Docker networking - You need to learn it](https://www.youtube.com/watch?v=bKFMS5C4CG0)
 Of je kan natuurlijk [de officiële documentatie](https://docs.docker.com/engine/network/) raadplegen.
 
 ### Networking in docker-compose
-Wanneer je meerdere services plaatst in dezelfde docker-compose file wordt automatisch een nieuw bridge netwerk gemaakt en verbonden aan de host en al die services. Je kan dat contact opnemen met andere services door hun naam te gebruiken. Je hoeft dus niet hun ip address uit te pluizen. Hieronder zo een voorbeeld van de docker-compose file om een Flask applicatie data uit een database te laten halen (uit een andere container):
+Wanneer je meerdere services plaatst in dezelfde docker-compose file wordt automatisch een nieuw bridge netwerk gemaakt en verbonden aan de host en al die services. Je kan dan contact opnemen met andere services door hun naam te gebruiken. **Je hoeft dus niet hun ip address uit te pluizen!** Hieronder zo een voorbeeld van een docker-compose file om een Flask applicatie data uit een database te laten halen (uit een andere container):
 
 #### docker-compose file
 ```yml
@@ -30,7 +30,7 @@ services:
       context: .
       dockerfile: ./Dockerfile
     ports:
-      - 5008:5000
+      - 5006:5000
     volumes:
       - ./app:/app
     networks:
