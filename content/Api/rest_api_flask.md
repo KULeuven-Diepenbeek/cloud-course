@@ -5,7 +5,7 @@ author: Arne Duyver
 draft: false
 ---
 
-## 5: Demo 1
+## Demo 1: Simpele REST api met Flask (Python) en MariaDB
 
 We maken een voorbeeld van een eenvoudige Flask-applicatie die CORS en PyMySQL gebruikt om een REST API te creëren met volledige CRUD-functionaliteit. 
 
@@ -14,6 +14,8 @@ Zorg ervoor dat je de vereiste pakketten installeert:
 ```bash
 pip install Flask flask-cors pymysql
 ```
+
+_**Als je de demo folder gebruikt uit de repository, dan kan je gewoon de docker-compose.yml gebruiken om m.b.v. containers de Flask api te starten (met de correcte modules al geïnstalleerd) met een MariaDB als onderdeel van dezelfde service!**_
 
 ## app.py
 <details open>
@@ -190,6 +192,10 @@ if __name__ == '__main__':
 
 
 ## De database
+
+<details open>
+<summary><b>Klik hier om de code te zien/verbergen voor SQL-code initialiseren database <code>restapi</code> </b></summary>
+
 ```sql
 CREATE TABLE users (
     id INT AUTO_INCREMENT PRIMARY KEY,
@@ -210,3 +216,242 @@ INSERT INTO users (name, email) VALUES
 ('David King', 'david.king@example.com'),
 ('Laura Scott', 'laura.scott@example.com');
 ```
+
+</details>
+
+## REST API testen met Thunder Client
+
+Nu onze Flask REST API in een Docker container draait, kunnen we deze testen vanuit VS Code met de Thunder Client extensie. Thunder Client is een lightweight REST API client die direct in VS Code geïntegreerd is.
+
+### Voorbereiding
+
+1. **Installeer Thunder Client extensie** in VSCode: Zoek naar "Thunder Client" en installeer de extensie van Ranga Vadhineni
+
+2. **Zorg dat je Docker container draait** op poort 5000:
+
+3. **Open Thunder Client** via het zijpaneel in VSCode of `Ctrl+Shift+P` -> "Thunder Client"
+
+### Handmatige tests uitvoeren
+
+#### GET - Alle gebruikers ophalen
+1. Klik op "New Request" in Thunder Client
+2. Stel de request in:
+   - **Method**: GET
+   - **URL**: `http://localhost:5000/api/users?pwd=mypassword`
+   - **Headers**: Content-Type: application/json (optioneel voor GET)
+3. Klik "Send"
+4. **Verwacht resultaat**: JSON array met alle gebruikers uit de database
+
+#### GET - Specifieke gebruiker ophalen
+1. Nieuwe request:
+   - **Method**: GET
+   - **URL**: `http://localhost:5000/api/users/1`
+2. **Verwacht resultaat**: JSON object van gebruiker met ID 1
+
+#### POST - Nieuwe gebruiker aanmaken
+1. Nieuwe request:
+   - **Method**: POST
+   - **URL**: `http://localhost:5000/api/users`
+   - **Headers**: Content-Type: application/json
+   - **Body** (JSON):
+     ```json
+     {
+       "name": "Test User",
+       "email": "test@example.com"
+     }
+     ```
+2. **Verwacht resultaat**: Bevestiging dat gebruiker is aangemaakt
+
+#### PUT - Gebruiker bijwerken
+1. Nieuwe request:
+   - **Method**: PUT
+   - **URL**: `http://localhost:5000/api/users/1`
+   - **Headers**: Content-Type: application/json
+   - **Body** (JSON):
+     ```json
+     {
+       "name": "Updated User",
+       "email": "updated@example.com"
+     }
+     ```
+
+#### DELETE - Gebruiker verwijderen
+1. Nieuwe request:
+   - **Method**: DELETE
+   - **URL**: `http://localhost:5000/api/users/1`
+
+<!-- #### Automatiseren met Thunder Client Collections
+
+Voor efficiënt testen kunnen we een **Collection** aanmaken met voorgemaakte tests:
+
+##### Collection aanmaken en exporteren
+
+1. **Maak een nieuwe Collection**:
+   - Klik op "Collections" tab in Thunder Client
+   - Klik "New Collection" 
+   - Naam: "Flask REST API Tests"
+
+2. **Voeg alle requests toe aan de collection**:
+   - Bij elke request: klik op "Save" -> selecteer de collection
+   - Geef elke request een duidelijke naam zoals "Get All Users", "Create User", etc.
+
+3. **Exporteer de collection**:
+   - Rechtsklik op de collection -> "Export"
+   - Sla op als `flask-api-tests.json` in je projectfolder
+
+##### Voorgemaakte test collection gebruiken
+
+<details open>
+<summary><b>Klik hier voor de complete Thunder Client collection (flask-api-tests.json)</b></summary>
+
+```json
+{
+  "client": "Thunder Client",
+  "collectionName": "Flask REST API Tests",
+  "dateExported": "2025-01-XX",
+  "version": "1.1",
+  "folders": [],
+  "requests": [
+    {
+      "name": "Get All Users",
+      "url": "http://localhost:5000/api/users?pwd=mypassword",
+      "method": "GET",
+      "headers": [
+        {
+          "name": "Content-Type",
+          "value": "application/json"
+        }
+      ],
+      "tests": [
+        {
+          "type": "res-code",
+          "value": "200"
+        },
+        {
+          "type": "res-header",
+          "key": "content-type",
+          "value": "application/json"
+        }
+      ]
+    },
+    {
+      "name": "Get User by ID",
+      "url": "http://localhost:5000/api/users/1",
+      "method": "GET",
+      "headers": [
+        {
+          "name": "Content-Type",
+          "value": "application/json"
+        }
+      ],
+      "tests": [
+        {
+          "type": "res-code",
+          "value": "200"
+        }
+      ]
+    },
+    {
+      "name": "Create New User",
+      "url": "http://localhost:5000/api/users",
+      "method": "POST",
+      "headers": [
+        {
+          "name": "Content-Type",
+          "value": "application/json"
+        }
+      ],
+      "body": {
+        "type": "json",
+        "raw": "{\n  \"name\": \"Thunder Client User\",\n  \"email\": \"thunder@example.com\"\n}"
+      },
+      "tests": [
+        {
+          "type": "res-code",
+          "value": "201"
+        }
+      ]
+    },
+    {
+      "name": "Update User",
+      "url": "http://localhost:5000/api/users/2",
+      "method": "PUT",
+      "headers": [
+        {
+          "name": "Content-Type",
+          "value": "application/json"
+        }
+      ],
+      "body": {
+        "type": "json",
+        "raw": "{\n  \"name\": \"Updated Thunder User\",\n  \"email\": \"updated.thunder@example.com\"\n}"
+      },
+      "tests": [
+        {
+          "type": "res-code",
+          "value": "200"
+        }
+      ]
+    },
+    {
+      "name": "Delete User",
+      "url": "http://localhost:5000/api/users/2",
+      "method": "DELETE",
+      "headers": [
+        {
+          "name": "Content-Type",
+          "value": "application/json"
+        }
+      ],
+      "tests": [
+        {
+          "type": "res-code",
+          "value": "200"
+        }
+      ]
+    }
+  ]
+}
+```
+
+</details>
+
+#### Collection importeren en gebruiken
+
+1. **Importeer de collection**:
+   - Thunder Client -> Collections tab
+   - Klik "Import" -> selecteer `flask-api-tests.json`
+
+2. **Tests uitvoeren**:
+   - **Individuele test**: Klik op een request en "Send"
+   - **Hele collection**: Rechtsklik op collection -> "Run All"
+
+3. **Test resultaten bekijken**:
+   - Elke request heeft automatische validatie (status codes)
+   - Groene vinkjes = geslaagde tests
+   - Rode kruisjes = gefaalde tests
+-->
+### Troubleshooting veelvoorkomende problemen
+
+- **Connection refused errors**
+    - Probleem: `ECONNREFUSED localhost:5000`
+    - Oplossing: Controleer of Docker container draait: `docker ps`
+- **CORS errors**  
+    - Probleem: Cross-origin blocked
+    - Oplossing: check of CORS is ingeschakeld in de Flask app met `CORS(app)`
+- **500 Internal Server Error**
+    - Probleem Database connectie mislukt
+    - Oplossing Controleer of MariaDB container draait en netwerk verbinding
+- **Wrong password**
+    - Probleem: GET /api/users geeft deze melding
+    - Oplossing: Voeg `?pwd=mypassword` toe aan de URL
+
+### Best practices voor API testing
+
+1. **Gebruik environments**: Maak variabelen voor `baseUrl` zodat je makkelijk kan switchen tussen localhost en productie
+2. **Test volgorde**: Test eerst GET endpoints voordat je CREATE/UPDATE/DELETE test. Zo kan je de GET endpoints gebruiken om na te gaan of je CREATE/UPDATE/DELETE geslaagd is.
+3. **Cleanup**: Gebruik DELETE requests om test data op te ruimen na testen
+4. **Automated tests**: Gebruik eventueel de test functionaliteit van Thunder Client voor automatische validatie.
+
+Met deze setup kun je nu efficiënt je Flask REST API testen vanuit VS Code, zonder externe tools nodig te hebben zoals `curl` of **Postman** of ...! 
+

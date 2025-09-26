@@ -2,120 +2,98 @@
 title: "Kubernetes Intro Lab met k3d en Windows"
 weight: 5
 author: Arne Duyver
-draft: true
+draft: false
 ---
-<!-- TODO nakijken -->
-## Doel
+## Wat is Kubernetes?
 
-* Studenten leren **hoe Kubernetes werkt** (master, node, pods, services, load balancing, failover).
-* Praktijk: 2 Windows laptops, elk met Docker Desktop + k3d.
-* Cluster met 2 nodes, één Flask webapp die bezoekers telt.
-* Test: load balancing met 100 requests + node crash simulatie.
+Kubernetes (afgekort als K8s) is een open-source platform ontworpen voor het automatiseren van de uitrol, schaalvergroting en beheer van containerized applicaties (**container orchestrator**). Het helpt developers en operationele teams dus om applicaties in containers (zoals Docker) te beheren en (horizontaal) te schalen. Kubernetes biedt een flexibele, gedistribueerde infrastructuur waarin je eenvoudig verschillende services kunt orkestreren en beheren.
+<br/>Het lost belangrijke problemen op die ontstaan wanneer je van enkele containers naar honderden containers op tientallen servers gaat (horizontal scaling). Traditioneel moest je handmatig containers starten, monitoren of ze nog draaien, verkeer verdelen tussen instanties, en nieuwe versies uitrollen zonder downtime. Kubernetes automatiseert dit allemaal. 
 
----
+### Kernconcepten van Kubernetes:
 
-## Wat is Kubernetes en het verschil met k3s en k3d
+- **Pods**: De kleinste eenheid in Kubernetes die een of meerdere containers bevat. Pods draaien op nodes in een cluster.
+- **Nodes**: Fysieke of virtuele machines waarop containers draaien. Een Kubernetes-cluster bestaat uit meerdere nodes.
+- **Cluster**: Een verzameling nodes beheerd door Kubernetes, waarin je je containerized applicaties kunt draaien.
+- **Deployment**: Een object dat ervoor zorgt dat je applicaties in een bepaalde staat blijven, door pods te schalen en up-to-date te houden.
+- **Service**: Een abstractie die een stabiel netwerk-IP biedt om toegang te krijgen tot een set pods.
+- **Namespace**: Een mechanisme voor logische scheiding in een cluster, zodat meerdere teams of projecten resources kunnen delen.
 
-### Kubernetes (K8s)
+Het platform organiseert machines in een **cluster** bestaande uit **nodes** (de individuele servers). Applicaties draaien in **pods** (groepen van containers die samenwerken) die worden beheerd door **deployments** (die zorgen dat er altijd het juiste aantal pods actief is). **Services** maken deze pods bereikbaar en verdelen verkeer automatisch tussen beschikbare instanties (**load balancing**). Wanneer pods crashen of nodes uitvallen, herstelt Kubernetes de gewenste situatie automatisch (**self-healing**). Dit betekent dat ontwikkelaars zich kunnen focussen op hun applicatie, terwijl Kubernetes de infrastructuur beheert.
 
-* Kubernetes (afgekort K8s) is een **container orchestrator**: software die containers (zoals Docker containers) start, beheert, schaalt en monitort.
-* Kernconcepten: *nodes*, *pods*, *deployments*, *services*, *load balancing*, *self-healing*.
-* Volwaardige Kubernetes clusters zijn complex en zwaar om te draaien.
+Volwaardige Kubernetes clusters kunnen wel complex zijn en zwaar om te draaien.
 
 ### k3s
 
-* k3s is een **lichte versie van Kubernetes** ontwikkeld door Rancher (nu SUSE).
-* Voordelen:
-
-  * Kleinere binaries, eenvoudiger installatie.
-  * Minder afhankelijkheden, ideaal voor edge devices (zoals Raspberry Pi).
-  * Volledig compatibel met Kubernetes API (alles wat je in K8s kan, kan je in k3s).
+k3s is een **lichte versie van Kubernetes** ontwikkeld door Rancher (nu SUSE) voor Linux devices. 
+<br/>Voordelen:
+  - Kleinere binaries, eenvoudiger installatie.
+  - Minder dependencies, ideaal voor edge devices (zoals Raspberry Pi).
+  - Volledig compatibel met Kubernetes API (alles wat je in K8s kan, kan je in k3s).
 
 ### k3d
 
-* k3d is een **wrapper rond k3s** die k3s runt in Docker containers.
-* Doel: heel snel een k3s-cluster opzetten op een lokale laptop/desktop.
-* Voordelen:
+k3d is een **wrapper rond k3s** die k3s runt in Docker containers. Het doel van k3d is heel snel een k3s-cluster kunnen opzetten op een lokale laptop/desktop.
+<br/>Voordelen:
+  - Supersnel opstarten en opruimen.
+  - Werkt goed op Windows + Docker Desktop.
+  - Perfect voor demo's, testen en lokaal oefenen.
 
-  * Supersnel opstarten en opruimen.
-  * Werkt goed op Windows + Docker Desktop.
-  * Perfect voor demo’s, testen en lokaal oefenen.
+**Nadelen t.o.v. volledige Kubernetes:**
+  - **Beperkte multi-node ondersteuning**: standaard worden pods niet automatisch geplaatst op externe agents/devices (complexere netwerkconfiguraties tussen verschillende machines zijn moeilijker op te zetten)
+  - **Docker afhankelijkheid**: vereist Docker Desktop, werkt niet met andere container runtimes
+  - **Storage limitaties**: geen geavanceerde persistent volume opties zoals in echte K8s clusters
+  - **Monitoring tools ontbreken**: geen ingebouwde dashboards of uitgebreide logging zoals Kubernetes dashboards
+  - **Productie-ongeschikt**: niet bedoeld voor werkelijke productieomgevingen, alleen voor ontwikkeling en testing
+  - **Resource isolatie**: alle nodes draaien in dezelfde Docker omgeving, geen echte machine-level isolatie
 
-➡️ Kort samengevat:
+### **Kort samengevat:**
 
 * **Kubernetes (K8s)** = het standaard, zware platform.
 * **k3s** = lichtgewicht Kubernetes, geschikt voor IoT/edge.
-* **k3d** = k3s in Docker, ideaal voor lokaal oefenen en demo’s.
+* **k3d** = k3s in Docker, ideaal voor lokaal oefenen en demo's.
 
 ---
 
-## Voorbereiding (docent)
+## Lab met k3d
 
-* Zorg dat beide laptops:
+Werk minstens per 2 samen en verbind je laptops met eenzelfde mobiele hotspot. Eén laptop wordt de master (Laptop A). De andere zal uiteindelijk een agent worden (Laptop B).
 
-  * **Windows 10/11** draaien.
-  * **Docker Desktop** geïnstalleerd en gestart hebben.
-  * **k3d** geïnstalleerd (zie instructies hieronder).
-  * In hetzelfde WiFi netwerk zitten (één hotspot volstaat, zolang laptops elkaar kunnen pingen).
-  * **kubectl** wordt samen met ... geïnstalleerd???  <!--TODO-->
+### Stap 1: Installatie k3d op Laptop A (master)
 
-<!-- TODO: New-NetFirewallRule -DisplayName "K3s Cluster" -Direction Inbound -Protocol TCP -LocalPort 6443,10250-10255,30080 -Action Allow -->
-
-<details>
-<summary>Installatie Docker Desktop</summary>
-
-1. Download: [https://www.docker.com/products/docker-desktop/](https://www.docker.com/products/docker-desktop/)
-2. Installeren met default settings.
-3. Start Docker Desktop en check:
-
-   ```powershell
-   docker version
-   ```
-
-   Als dit werkt -> ok.
-
-</details>
-
-<details>
-<summary>Installatie k3d</summary>
-
-1. Download binary: [https://k3d.io/v5.6.0/#installation](https://k3d.io/v5.6.0/#installation) (choco install k3d) OF [k3d.exe via github](https://github.com/k3d-io/k3d/releases)
+1. Download binary: [https://k3d.io/v5.6.0/#installation](https://k3d.io/v5.6.0/#installation) (choco install k3d) OF [k3d.exe via github](https://github.com/k3d-io/k3d/releases). Dit installeert ook de tool `kubectl` die je zal gebruiken om je cluster te beheren.
 2. Voeg `k3d.exe` toe aan PATH.
 3. Test:
+```powershell
+k3d version
+kubectl version
+```
+=> zou een versienummer moeten tonen.
 
-   ```powershell
-   k3d version
-   ```
-
-   -> zou een versienummer moeten tonen.
-
-</details>
-
----
-
-## Stap 1 — Cluster aanmaken op Laptop A (master)
+### Stap 2: Cluster aanmaken op Laptop A
 
 Laptop A creëert een k3s cluster dat externe nodes kan accepteren.
 
 ```powershell
 # Vervang <LAPTOP_A_IP> door het werkelijke IP adres van Laptop A (ipconfig)
-k3d cluster create demo-cluster --servers 1 --agents 0 -p "8080:30080@loadbalancer" --api-port <LAPTOP_A_IP>:6443
+k3d cluster create demo-cluster --servers 1 --agents 1 -p "8080:30080@loadbalancer" --api-port <LAPTOP_A_IP>:6443
 ```
-<!-- k3d cluster create demo-cluster --servers 1 --agents 1 -p "8080:80@loadbalancer" --api-port 10.209.145.166:6443 -->
+<!-- k3d cluster create demo-cluster --servers 1 --agents 1 -p "8080:80@loadbalancer" --api-port 10.209.145.166:6443 OF  k3d cluster create demo-cluster --servers 1 --agents 1 -p "8080:30080@loadbalancer" --api-port 127.0.0.1:6443 --kubeconfig-update-default --kubeconfig-switch-context-->
 
-Om op te ruimen: `k3d cluster delete demo-cluster`
-Na restart connection refused doe dan even: `k3d cluster stop demo-cluster; k3d cluster start demo-cluster`
 
-* `--servers 1`: de control plane (master).
-* `--agents 1`: één worker node op Laptop A.
-* `-p "8080:80@loadbalancer"`: mapt poort 8080 op Windows naar poort 80 in cluster.
-* `--api-port <LAPTOP_A_IP>:6443`: API server toegankelijk vanaf andere laptops.
+
+- `--servers 1`: de control plane (master).
+- `--agents 1`: één worker node op Laptop A.
+- `-p "8080:80@loadbalancer"`: mapt poort 8080 op Windows naar poort 80 in cluster.
+- (`--api-port <LAPTOP_A_IP>:6443`: API server toegankelijk vanaf andere laptops. Voor zo dadelijk zie [EXTRA](#extra--node-agent-toevoegen-op-laptop-b))
+
+(_Om te deleten: `k3d cluster delete demo-cluster`_
+<br/>_Na laptop restart `connection refused` doe dan even: `k3d cluster stop demo-cluster; k3d cluster start demo-cluster`_)
 
 Check:
-
 ```powershell
 kubectl get nodes
 ```
+<!-- kubectl config use-context k3d-demo-cluster OR kubectl config delete-context k3d-demo-cluster -->
 
 Example output:
 ```powershell
@@ -125,46 +103,160 @@ k3d-demo-cluster-agent-0    Ready    <none>                 10m   v1.31.5+k3s1
 k3d-demo-cluster-server-0   Ready    control-plane,master   10m   v1.31.5+k3s1
 ```
 
+## Stap 3: Maak `flask-app.yaml` (Deployment en Service) en deploy:
+
+<details open>
+<summary>flask-app.yaml</summary>
+
+```yaml
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: flask-app
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: flask
+  template:
+    metadata:
+      labels:
+        app: flask
+    spec:
+      containers:
+      - name: flask
+        image: arneduyver/loadbalancetester-flask:latest
+        ports:
+        - containerPort: 5000
 ---
+apiVersion: v1
+kind: Service
+metadata:
+  name: flask-service
+spec:
+  type: LoadBalancer
+  ports:
+  - port: 30080
+    targetPort: 5000
+  selector:
+    app: flask
+```
 
-## Stap 2 — Node (agent) toevoegen op Laptop B
+</details>
 
-Laptop B join’t het cluster van Laptop A.
+Deploy:
 
-<!-- TODO: niet meet nodig
-1. **Op Laptop A**: Exporteer de clusterconfig:
+```powershell
+kubectl apply -f flask-app.yaml
+kubectl get pods -o wide
+```
 
-   ```powershell
-   k3d kubeconfig get demo-cluster > kubeconfig.yaml
-   ``` -->
+Example output:
+```powershell
+PS C:\git\cloud-demos-exercises-student\applicatiecolleges\4_kubernetes> kubectl get pods -o wide
+NAME                         READY   STATUS              RESTARTS   AGE   IP       NODE                        NOMINATED NODE   READINESS GATES
+flask-app-5ffbc584f7-4g8g6   0/1     ContainerCreating   0          6s    <none>   k3d-demo-cluster-server-0   <none>           <none>
+flask-app-5ffbc584f7-zcjjj   0/1     ContainerCreating   0          6s    <none>   k3d-demo-cluster-agent-0    <none>           <none>
 
-1. **Op Laptop A**: Haal de node token op:
 
-   ```powershell
-   docker exec k3d-demo-cluster-server-0 cat /var/lib/rancher/k3s/server/node-token
-   ```
-   - `docker exec` - Runs a command inside a Docker container
-   - `k3d-demo-cluster-server-0` - The name of the k3d server container
-   - `cat /var/lib/rancher/k3s/server/node-token` - Reads the actual join token file that k3s creates
+PS C:\git\cloud-demos-exercises-student\applicatiecolleges\4_kubernetes> kubectl get pods -o wide
+NAME                         READY   STATUS    RESTARTS   AGE   IP          NODE                        NOMINATED NODE   READINESS GATES
+flask-app-5ffbc584f7-4g8g6   1/1     Running   0          39s   10.42.0.6   k3d-demo-cluster-server-0   <none>           <none>
+flask-app-5ffbc584f7-zcjjj   1/1     Running   0          39s   10.42.1.6   k3d-demo-cluster-agent-0    <none>           <none>
+```
 
-2. Deel `kubeconfig.yaml` met Laptop B (via USB of file share).
+_Om te deleten: `kubectl delete -f flask-app.yaml`_
 
-3. **Op Laptop B**: Join het cluster als externe node (vervang <LAPTOP_A_IP> en <TOKEN>):
+### Uitleg flask-app.yaml configuratie
 
-     ```powershell
-     docker run -d --name k3s-agent --restart=unless-stopped --privileged -p 30080:30080 -p 10250:10250 rancher/k3s:latest agent --server https://<LAPTOP_A_IP>:6443 --token <TOKEN>
-     ```
-     <!-- docker run -d --name k3s-agent --restart=unless-stopped --privileged rancher/k3s:latest agent --server https://10.209.145.166:6443 --token K108428e10ef66107779bbba82f045d33b7000db988d83bba28fe43e9f2e2de5a72::server:tzBcpyicksiZPvbylXqi -->
+Het YAML bestand bevat twee Kubernetes objecten:
+
+#### Deployment
+- **`replicas: 2`** - Start 2 identieke pods van de Flask app
+- **`selector.matchLabels`** - Koppelt de Deployment aan pods met label `app: flask`
+- **`template.metadata.labels`** - Geeft elk pod het label `app: flask`
+- **`image: flask-counter:latest`** - Gebruikt de gespecificeerde image voor de pods
+(- **`imagePullPolicy: Never`** - Belangrijk: als je alleen een local image wil gebruiken en dus niet pullen van een repository)
+- **`containerPort: 5000`** - Flask app draait op poort 5000 binnen de container
+
+#### Service
+- **`type: LoadBalancer`** - Verdeelt verkeer over alle beschikbare pods
+- **`port: 30080`** - De Service is bereikbaar op in de cluster op poort 30080 (die we gemapt hebben naar 8080 in de host)
+- **`targetPort: 5000`** - Stuurt verkeer door naar poort 5000 van de pods
+- **`selector: app: flask`** - Zoekt alle pods met label `app: flask`
+
+=> **Resultaat**: Kubernetes start 2 Flask pods en verdeelt automatisch verkeer tussen beide.
+
+## Stap 4 — Test load balancing met persistente connecties
+
+1. **Open in browser**: `http://localhost:8080` -> je ziet de Flask app met 1 actieve connectie (jouw browser)
+
+2. **Start 20 persistente connecties** om load balancing te demonstreren:
+
+Open 20 browser tabs met een verbinding naar `http://localhost:8080`.
+
+3. **Monitor de verdeling**:
+   - Refresh de browser op `http://localhost:8080`
+   - Je ziet afwisselend de verschillende pods (met verschillende hostnames)
+   - Elke pod toont ~10 actieve connecties
+   - => **Dit toont load balancing in actie!**
+
+## Stap 5 — Node crash simuleren <!-- TODO: kubectl delete pod <pod-name> -->
+
+1. **Terwijl de 20 connecties nog actief zijn**, "crash" een van de pods: <!-- TODO:  nakijken of dit kan zonder: docker stop k3s-agent && docker rm k3s-agent-->
+```powershell
+kubectl delete pod <pod-name>
+```
+
+2. Kijk hoe de pods herschedulen:
+
+```powershell
+kubectl get pods -o wide --watch
+```
+
+3. **Monitor in browser**: Refresh `http://localhost:8080`
+    - Je ziet nu dat er onmiddelijk een nieuwe pod aangemaakt is en het verkeer zo snel mogelijk herverdeeld is, zodat de gebruiker niets merken van een "crash".
+    - Kubernetes heeft automatisch de connecties overgenomen!
+    - => **Dit toont failover in actie!**
+
+
+## EXTRA — Node (agent) toevoegen op Laptop B
+
+1. Zorg ervoor dat beide laptops elkaar op het netwerk kunnen vinden en dat de poorten voor k3d openstaan:
+- enable zichtbaar op netwerk: via `file explorer`-> `netwerk`-> `maak pc zichtbaar op netwerk`
+- open ports (als Administrator):
+```powershell
+New-NetFirewallRule -DisplayName "K3s Cluster" -Direction Inbound -Protocol TCP -LocalPort 6443,10250-10255,30080 -Action Allow
+```
+2. **Op Laptop A**: Haal de master node token op:
+
+```powershell
+docker exec k3d-demo-cluster-server-0 cat /var/lib/rancher/k3s/server/node-token
+```
+  - `docker exec` - Runs a command inside a Docker container
+  - `k3d-demo-cluster-server-0` - The name of the k3d server container
+  - `cat /var/lib/rancher/k3s/server/node-token` - Reads the actual join token file that k3s creates
+
+Hier zie je een voorbeeld van zo een token: `K108428e10ef66107779bbba82f045d33b7000db988d83bba28fe43e9f2e2de5a72::server:tzBcpyicksiZPvbylXqi`
+
+3. Deel de token met Laptop B (via mail of ...).
+
+4. **Op Laptop B**: Join de cluster als externe node (vervang <LAPTOP_A_IP> en <TOKEN_A>):
+
+```powershell
+docker run -d --name k3s-agent --restart=unless-stopped --privileged -p 30080:30080 -p 10250:10250 rancher/k3s:latest agent --server https://<LAPTOP_A_IP>:6443 --token <TOKEN_A>
+```
+<!-- docker run -d --name k3s-agent --restart=unless-stopped --privileged rancher/k3s:latest agent --server https://10.209.145.166:6443 --token K108428e10ef66107779bbba82f045d33b7000db988d83bba28fe43e9f2e2de5a72::server:tzBcpyicksiZPvbylXqi -->
 
 Check op Laptop A:
 
 ```powershell
 kubectl get nodes
 ```
--> zou nu 2 nodes moeten tonen (1 op Laptop A, 1 op Laptop B):
+=> zou nu 2 nodes moeten tonen (1 op Laptop A, 1 op Laptop B):
 
 Example output:
-```powerhell
+```powershell
 PS C:\git\cloud-demos-exercises-docent\k3d> kubectl get nodes
 NAME                        STATUS     ROLES                  AGE   VERSION
 a9b9908eabba                NotReady   <none>                 1s    v1.31.12+k3s1
@@ -172,7 +264,10 @@ k3d-demo-cluster-agent-0    Ready      <none>                 10m   v1.31.5+k3s1
 k3d-demo-cluster-server-0   Ready      control-plane,master   10m   v1.31.5+k3s1
 ```
 
----
+**! Jammer genoeg laat k3d ons niet toe om op een eenvoudige manier de agents op andere devices te gebruiken om pods op te creëren. Dit is het voordeel waardoor k3d simpeler in gebruik is dan k8s waar je zelf meer stappen moet ondernemen om een netwerk tussen verschillende nodes op te stellen, maar voor producties (geen demos) is dit dus wel een groot nadeel!**
+
+Dit labo liet wel alle noodzakelijke stappen zien, hoe je met de verschillende functionaliteiten van k3d (en in extensie k3s en k8s) moet omgaan en welke commando's je kan gebruiken en hoe je deployments en services opstelt.
+
 <!-- TODO: niet meer nodig want halen image van dockerhub
 ## Stap 3 — Flask webapp deployen
 
@@ -321,125 +416,16 @@ CMD ["python", "app.py"]
    Dit zorgt ervoor dat alle nodes in het cluster (inclusief Laptop B) toegang hebben tot de image. 
 -->
 
-## Stap 3 —  Maak `flask-app.yaml`en deploy:
-
-<details>
-<summary>flask-app.yaml</summary>
-
-```yaml
-apiVersion: apps/v1
-kind: Deployment
-metadata:
-  name: flask-app
-spec:
-  replicas: 2
-  selector:
-    matchLabels:
-      app: flask
-  template:
-    metadata:
-      labels:
-        app: flask
-    spec:
-      containers:
-      - name: flask
-        image: arneduyver/loadbalancetester-flask:latest
-        ports:
-        - containerPort: 5000
----
-apiVersion: v1
-kind: Service
-metadata:
-  name: flask-service
-spec:
-  type: LoadBalancer
-  ports:
-  - port: 80
-    targetPort: 5000
-  selector:
-    app: flask
-```
-
-</details>
-
-Deploy:
-
-```powershell
-kubectl apply -f flask-app.yaml
-kubectl get pods -o wide
-```
-Om op te ruimen: `kubectl delete -f flask-app.yaml`
-
-### Uitleg flask-app.yaml configuratie
-
-Het YAML bestand bevat twee Kubernetes objecten:
-
-#### Deployment
-- **`replicas: 2`** - Start 2 identieke pods van de Flask app
-- **`selector.matchLabels`** - Koppelt de Deployment aan pods met label `app: flask`
-- **`template.metadata.labels`** - Geeft elk pod het label `app: flask`
-- **`image: flask-counter:latest`** - Gebruikt onze lokaal gebouwde image
-- **`imagePullPolicy: Never`** - Belangrijk: gebruik alleen lokale image, pull niet van internet
-- **`containerPort: 5000`** - Flask app draait op poort 5000 binnen de container
-
-#### Service
-- **`type: LoadBalancer`** - Verdeelt verkeer over alle beschikbare pods
-- **`port: 80`** - De Service is bereikbaar op poort 80
-- **`targetPort: 5000`** - Stuurt verkeer door naar poort 5000 van de pods
-- **`selector: app: flask`** - Zoekt alle pods met label `app: flask`
-
-=> **Resultaat**: Kubernetes start 2 Flask pods en verdeelt automatisch verkeer tussen beide.
-
 
 <!-- TODO? : kubectl port-forward pod/flask-app-5ffbc584f7-g84b8 8085:5000 
-svclb = “service load balancer” used by k3d to emulate a cloud LoadBalancer for Kubernetes Services of type LoadBalancer. svclb is an emulator — not a full cloud LB. It only proxies where it can reach the node/container endpoints. That’s why it didn’t forward to your laptop B unless laptop B exposed NodePort on a reachable host interface.-->
----
+svclb = "service load balancer" used by k3d to emulate a cloud LoadBalancer for Kubernetes Services of type LoadBalancer. svclb is an emulator — not a full cloud LB. It only proxies where it can reach the node/container endpoints. That's why it didn't forward to your laptop B unless laptop B exposed NodePort on a reachable host interface.-->
 
-## Stap 4 — Test load balancing met persistente connecties
-
-1. **Open in browser**: `http://localhost:8080` -> je ziet de Flask app met 1 actieve connectie (jouw browser)
-
-2. **Start 20 persistente connecties** om load balancing te demonstreren:
-
-Open 20 browser tabs op laptop A met een verbinding naar `http://localhost:8080`.
-
-3. **Monitor de verdeling**:
-   - Refresh de browser op `http://localhost:8080`
-   - Je ziet afwisselend de verschillende pods (met verschillende hostnames)
-   - Elke pod toont ~10 actieve connecties
-   - -> **Dit toont load balancing in actie!**
-
----
-
-## Stap 5 — Node crash simuleren <!-- TODO: kubectl delete pod <pod-name> -->
-
-1. **Terwijl de 20 connecties nog actief zijn**, crash Laptop B:
-
-   **Op Laptop B**:
-   ```powershell
-   
-   docker stop k3s-agent
-   docker rm k3s-agent
-   ```
-
-2. **Op Laptop A**: Kijk hoe de pods herschedulen:
-
-   ```powershell
-   kubectl get pods -o wide --watch
-   ```
-
-3. **Monitor in browser**: Refresh `http://localhost:8080`
-   - Je ziet nu **alle ~20 connecties** op één pod (van Laptop A)
-   - Kubernetes heeft automatisch de connecties overgenomen!
-   - -> **Dit toont failover in actie!**
-
----
 
 ## Nabespreking
 
-* Kubernetes verdeelt verkeer automatisch over pods/nodes.
-* Als een node crasht, neemt de andere het over.
-* LoadBalancer + Service abstraheren de complexiteit.
+- Kubernetes verdeelt verkeer automatisch over pods/nodes.
+- Als een node crasht, neemt de andere het over.
+- LoadBalancer en Service abstraheren de complexiteit.
 
 ---
 
@@ -447,11 +433,11 @@ Open 20 browser tabs op laptop A met een verbinding naar `http://localhost:8080`
 
 ### Wat is Docker Swarm?
 
-Docker Swarm is **Docker's eigen container orchestrator** - een concurrent van Kubernetes. Net zoals Kubernetes kan het:
-* Containers over meerdere machines beheren
-* Load balancing tussen containers
-* Automatic failover bij node crashes
-* Service discovery en networking
+Docker Swarm is **Docker's eigen container orchestrator**, een concurrent van Kubernetes. Net zoals Kubernetes kan het:
+- Containers over meerdere machines beheren
+- Load balancing tussen containers
+- Automatic failover bij node crashes
+- Service discovery en networking
 
 ### Belangrijkste verschillen
 
@@ -469,10 +455,10 @@ Docker Swarm is **Docker's eigen container orchestrator** - een concurrent van K
 ### Wanneer Docker Swarm?
 
 **Voordelen van Swarm:**
-* **Snelle setup** - `docker swarm init` en klaar
-* **Familiar** - zelfde commando's als Docker
-* **Minder overhead** - geen extra tools nodig
-* **Goed voor kleinere setups** - 2-10 nodes
+- **Snelle setup** - `docker swarm init` en klaar
+- **Familiar** - zelfde commando's als Docker
+- **Minder overhead** - geen extra tools nodig
+- **Goed voor kleinere setups** - 2-10 nodes
 
 **Voorbeeld Swarm setup:**
 ```bash
@@ -487,16 +473,16 @@ docker swarm join --token <TOKEN> <MANAGER-IP>:2377
 ### Wanneer Kubernetes?
 
 **Voordelen van Kubernetes:**
-* **Industry standard** - wordt overal gebruikt
-* **Zeer flexibel** - oneindig aanpasbaar
-* **Grote community** - veel tools en ondersteuning
-* **Cloud native** - alle cloud providers ondersteunen het
-* **Toekomstbestendig** - actieve ontwikkeling
+- **Industry standard** - wordt overal gebruikt
+- **Zeer flexibel** - oneindig aanpasbaar
+- **Grote community** - veel tools en ondersteuning
+- **Cloud native** - alle cloud providers ondersteunen het
+- **Toekomstbestendig** - actieve ontwikkeling
 
 ### Conclusie
 
-* **Docker Swarm** = eenvoud, snelle start, kleinere projecten
-* **Kubernetes** = kracht, flexibiliteit, enterprise-ready
+- **Docker Swarm** = eenvoud, snelle start, kleinere projecten
+- **Kubernetes** = kracht, flexibiliteit, enterprise-ready
 
 Voor dit lab kozen we Kubernetes omdat het de **industrie-standaard** is en studenten ermee zullen werken in hun carrière. Maar voor eenvoudige projecten kan Docker Swarm een uitstekende keuze zijn!
 
