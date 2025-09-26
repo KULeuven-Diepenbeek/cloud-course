@@ -47,7 +47,7 @@ Stel dat je een API hebt voor het beheren van boeken in een bibliotheek:
   - Wat de nieuwe waarden van boek 5 moeten zijn steek je in een JSON object.
 - **DELETE /books/5**: Verwijder het boek met ID 5.
 
-REST APIs zijn populair omdat ze simpel en schaalbaar zijn, en ze werken goed met webapplicaties.
+REST APIs zijn populair omdat ze simpel en schaalbaar zijn, en goed werken met webapplicaties.
 
 ### Onderdelen van een HTTP Request
 
@@ -73,9 +73,9 @@ fetch("http://localhost:5000/api/users",
 
 ### Hoe werkt CORS (Cross-Origin Resource Sharing)?
 
-CORS staat voor **Cross-Origin Resource Sharing** en is een beveiligingsmechanisme dat door browsers wordt toegepast. Het bepaalt of een webapplicatie die op een bepaalde "origin" (domein, protocol en poort) draait, toegang heeft tot resources van een andere "origin". Standaard mogen webpagina’s alleen verzoeken doen naar dezelfde origin als de pagina zelf, een beveiligingsmaatregel genaamd **same-origin policy**. CORS breidt deze restricties uit door cross-origin verzoeken onder bepaalde voorwaarden toe te staan.
+CORS staat voor **Cross-Origin Resource Sharing** en is een beveiligingsmechanisme dat door browsers wordt toegepast. Het bepaalt of een webapplicatie die op een bepaalde "origin" (domein, protocol en poort) draait, toegang heeft tot resources van een andere "origin". Standaard mogen webpagina’s alleen verzoeken doen naar dezelfde origin (zoals de pagina zelf). Dat is een beveiligingsmaatregel genaamd **same-origin policy**. CORS breidt deze restricties uit door cross-origin verzoeken onder bepaalde voorwaarden toe te staan.
 
-Sinds onze API juist dienen om door andere websites gebruikt te worden proberen we deze policy steeds te enabelen.
+Sinds onze APIs juist dienen om door andere websites gebruikt te worden proberen we deze policy steeds te enabelen.
 
 ### CORS-werking:
 

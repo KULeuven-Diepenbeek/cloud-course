@@ -2,7 +2,7 @@
 title: "REST api in laravel"
 weight: 7
 author: Arne Duyver
-draft: false
+draft: true
 ---
 ## 6: Demo 3
 Verder kunnen we onze laravel website uitbreiden met een eigen REST API gedefinieerd in laravel zelf (of in een andere laravel applicatie die op een andere server draait)

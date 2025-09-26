@@ -15,7 +15,7 @@ Zorg ervoor dat je de vereiste pakketten installeert:
 pip install Flask flask-cors pymysql
 ```
 
-_**Als je de demo folder gebruikt uit de repository, dan kan je gewoon de docker-compose.yml gebruiken om m.b.v. containers de Flask api te starten (met de correcte modules al geïnstalleerd) met een MariaDB als onderdeel van dezelfde service!**_
+_**Als je de demo folder gebruikt uit de repository, dan kan je gewoon de docker-compose.yml gebruiken om m.b.v. containers de Flask api te starten (met de correcte modules al geïnstalleerd) en met een MariaDB database als onderdeel van dezelfde service!**_
 
 ## app.py
 <details open>

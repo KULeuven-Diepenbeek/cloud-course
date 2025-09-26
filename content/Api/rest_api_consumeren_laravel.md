@@ -2,7 +2,7 @@
 title: "REST api consumeren in laravel"
 weight: 6
 author: Arne Duyver
-draft: false
+draft: true
 ---
 
 # REST api oproepen in Laravel vanuit de frontend met Javascript
