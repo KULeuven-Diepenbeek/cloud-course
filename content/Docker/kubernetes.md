@@ -420,12 +420,19 @@ CMD ["python", "app.py"]
 <!-- TODO? : kubectl port-forward pod/flask-app-5ffbc584f7-g84b8 8085:5000 
 svclb = "service load balancer" used by k3d to emulate a cloud LoadBalancer for Kubernetes Services of type LoadBalancer. svclb is an emulator — not a full cloud LB. It only proxies where it can reach the node/container endpoints. That's why it didn't forward to your laptop B unless laptop B exposed NodePort on a reachable host interface.-->
 
+### State management met Kubernetes.
+
+Het is moeilijk om over verschillende database pods een identieke state te garanderen (met behulp van StatefulSets, Persistente Volumes, replicatie en synchronisatie). Daarom is het soms nuttig om de databases extern te beheren en via api calls je applicatie de juiste data te laten ophalen.
+Tegenwoordig bevatten hosted database solutions simpele methoden om backups en redundantie te voorzien. Dit moet je dan niet specifiek in Kubernetes opstellen. (Het is wel mogelijk dit volledig in Kubernetes te doen!)
 
 ## Nabespreking
 
 - Kubernetes verdeelt verkeer automatisch over pods/nodes.
 - Als een node crasht, neemt de andere het over.
 - LoadBalancer en Service abstraheren de complexiteit.
+
+## Extra bronnen
+- [K8s met minikube](https://www.youtube.com/watch?v=s_o8dwzRlu4&t=5s)
 
 ---
 
