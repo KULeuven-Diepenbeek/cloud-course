@@ -152,6 +152,8 @@ Maak een nieuwe lay-out als deze niet bestaat en voeg vervolgens de onderstaande
 </p>
 </details>
 
+**Opgelet: aangezien alles via de frontend verloopt kan mijn REST api bereiken met `localhost:5000` dit is echter geen goede methode en je kan beter met de docker-compose service naam werken `api`. Dit zal ook moeten wanneer je call maakt vanuit de backend**
+
 ### 4. Routes definiëren
 
 Definieer in `routes/web.php` een route om de users view te laden.
@@ -194,7 +196,7 @@ We kunnen nu gelijkaardige HTML code gebruiken als bovenstaande, maar de javascr
     <ul class="list-group" id="users-list">
         @foreach ($users as $user)
         <li class="list-group-item">
-            {{ $user->name }} - {{ $user->email }}
+            {{ $user['name'] }} - {{ $user['email'] }}
         </li>
         @endforeach
     </ul>
@@ -223,7 +225,7 @@ use GuzzleHttp\Client;
 Route::get('/usersBackend', function () {
     // Maak een HTTP-verzoek naar de Flask API
     // uri is de flask service uit onze docker-compose
-    $client = new Client(['base_uri' => 'server2:5000']);
+    $client = new Client(['base_uri' => 'api:5000']);
     // GET alle users op endpoint /api/users met als parameter pwd=mypassword
     $response = $client->get('/api/users', [
         'query' => ['pwd' => 'mypassword']
