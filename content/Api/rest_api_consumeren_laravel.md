@@ -5,7 +5,7 @@ author: Arne Duyver
 draft: false
 ---
 
-## REST api oproepen in Laravel vanuit de frontend met Javascript
+## REST api oproepen in [Laravel](https://kuleuven-diepenbeek.github.io/fsweb-course/backend/laravel_basics/) vanuit de frontend met Javascript
 Om een ​​Laravel-project te maken dat communiceert met de REST API met behulp van JavaScript in de frontend, moeten we volgende zaken doen:
 
 1. Laravel project aanmaken
@@ -17,15 +17,16 @@ Om een ​​Laravel-project te maken dat communiceert met de REST API met behul
 ```bash
 composer create-project laravel/laravel consumeApi
 # change database type to 'mysql' in .env
-cd /consumeApi
+cd ./consumeApi
 php artisan migrate
 # start onze website, host 0.0.0.0 is nodig om correct met docker te werken
 php artisan serve --host 0.0.0.0
+# Ctrl+c om server te stoppen
 ```
 
 ### 2. Laravel views en Javascript calls
 We gebruiken JavaScript (met fetch) om de Flask REST API op te roepen.
-Maak een nieuwe lay-out als deze niet bestaat en voeg vervolgens de benodigde HTML-structuure: `views/users.blade.php`
+Maak een nieuwe lay-out als deze niet bestaat en voeg vervolgens de onderstaande HTML code toe: `app/resources/views/users.blade.php`
 <details open>
     <summary><i><b>Klik hier om de code te zien/verbergen voor `views/users.blade.php`</b></i></summary>
     <p>
@@ -147,6 +148,7 @@ Maak een nieuwe lay-out als deze niet bestaat en voeg vervolgens de benodigde HT
 </body>
 </html>
 ```
+
 </p>
 </details>
 
@@ -170,7 +172,7 @@ Zorg ervoor dat je Flask applicatie aan het runnen is.
 ## REST api oproepen in Laravel vanuit de backend met php
 We kunnen een extra route toevoegen in de `routes/web.php` naar `/usersBackend`. We maken hier weer een nieuwe view voor aan. De functionaliteit van het endpoint kunnen we volledig definiëren in `web.php`. Om met de requests te kunnen werken hebben we de Guzzle module nodig. Installeer deze via `composer require guzzlehttp/guzzle`
 
-We kunnen nu gelijkaardige HTML code gebruiken als bovenstaande, maar de javascript kan nu grotendeels weggelaten worden: `views/usersBackend.blade.php`. De view gaat nu van php automatisch een list van users meekrijgen, die we kunnen uilezen in blade.php files met: `$users`
+We kunnen nu gelijkaardige HTML code gebruiken als bovenstaande, maar de javascript kan nu grotendeels weggelaten worden: `views/usersBackend.blade.php`. De view gaat nu van php automatisch een list van users meekrijgen, die we kunnen uitlezen in blade.php files met: `$users`
 
 <details open>
     <summary><i><b>Klik hier om de code te zien/verbergen voor `views/usersBackend.blade.php`</b></i></summary>
@@ -323,7 +325,7 @@ class FlaskUserController extends Controller
 </p>
 </details>
 
-We voegen de import van onze FlaskUserController toe aan de `web.php` en definiëren de verschillende endpoints:
+We voegen de import van onze FlaskUserController toe aan de `web.php` en definiëren de verschillende endpoints. We maken zo dadelijk ook een `views/users-via-backend.blade.php` aan die gebruik zal maken van die endpoints en deze route voegen we ook al toe:
 
 <details open>
     <summary><i><b>Klik hier om de code te zien/verbergen voor `routes/web.php`</b></i></summary>
@@ -340,14 +342,18 @@ Route::get('/flaskusers', [FlaskUserController::class, 'index']);
 Route::get('/users/{id}', [FlaskUserController::class, 'show']);
 Route::post('/users', [FlaskUserController::class, 'store']);
 Route::delete('/users/{id}', [FlaskUserController::class, 'destroy']);
+
+Route::get('/users-via-backend',function () {
+    return view('users-via-backend');
+});
 ```
 </p>
 </details>
 
-Nu moeten we onze `views/users.blade.php` nog aanpassen zodat de fetch gebeurt naar de lokale endpoints.
+Nu kunnen we een `views/users-via-backend.blade.php` nog aanmaken zodat de fetch gebeurt naar de lokale endpoints (de pagina zal er dus uitzien als onze eerdere `users` view maar werkt via de backend).
 
 <details open>
-    <summary><i><b>Klik hier om de code te zien/verbergen voor `views/users.blade.php`</b></i></summary>
+    <summary><i><b>Klik hier om de code te zien/verbergen voor `views/users-via-backend.blade.php`</b></i></summary>
     <p>
 
 ```php
