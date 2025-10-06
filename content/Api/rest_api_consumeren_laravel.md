@@ -483,3 +483,4 @@ Nu kunnen we een `views/users-via-backend.blade.php` nog aanmaken zodat de fetch
 </p>
 </details>
 
+## Opdracht: werk nu je eigen Rest api in Flask uit en maak een gepaste frontend in laravel.
