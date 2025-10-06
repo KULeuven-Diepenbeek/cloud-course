@@ -264,7 +264,7 @@ class FlaskUserController extends Controller
     public function __construct()
     {
         // uri is de flask service uit onze docker-compose
-        $this->client = new Client(['base_uri' => 'server2:5000']);
+        $this->client = new Client(['base_uri' => 'api:5000']);
     }
 
     // GET all users
@@ -335,9 +335,23 @@ We voegen de import van onze FlaskUserController toe aan de `web.php` en definiÃ
 
 ```php
 use App\Http\Controllers\FlaskUserController;
+use GuzzleHttp\Client;
 
 Route::get('/users',function () {
     return view('users');
+});
+
+Route::get('/usersBackend', function () {
+    // Maak een HTTP-verzoek naar de Flask API
+    // uri is de flask service uit onze docker-compose
+    $client = new Client(['base_uri' => 'api:5000']);
+    // GET alle users op endpoint /api/users met als parameter pwd=mypassword
+    $response = $client->get('/api/users', [
+        'query' => ['pwd' => 'mypassword']
+    ]);
+    $users = json_decode($response->getBody()->getContents(), true);   
+    // Stuur de lijst van gebruikers naar de view
+    return view('usersBackend', ['users' => $users]);
 });
 
 Route::get('/flaskusers', [FlaskUserController::class, 'index']);
@@ -364,6 +378,7 @@ Nu kunnen we een `views/users-via-backend.blade.php` nog aanmaken zodat de fetch
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="csrf-token" content="{{ csrf_token() }}">
     <title>Flask Users</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
 </head>
@@ -405,6 +420,9 @@ Nu kunnen we een `views/users-via-backend.blade.php` nog aanmaken zodat de fetch
 </div>
 
 <script>
+    // Get CSRF token from meta tag
+    const csrfToken = document.querySelector('meta[name="csrf-token"]').getAttribute('content');
+
     // Function to fetch users and populate the table
     function fetchUsers() {
         // Hier doen we dus een oproep naar het lokale endpoint
@@ -434,7 +452,12 @@ Nu kunnen we een `views/users-via-backend.blade.php` nog aanmaken zodat de fetch
     // Function to delete a user
     function deleteUser(id) {
         fetch(`/users/${id}`, {
-            method: 'DELETE'
+            method: 'DELETE',
+            headers: {
+                'X-CSRF-TOKEN': csrfToken,
+                'Content-Type': 'application/json',
+                'Accept': 'application/json'
+            }
         })
         .then(response => response.json())
         .then(data => {
@@ -459,7 +482,9 @@ Nu kunnen we een `views/users-via-backend.blade.php` nog aanmaken zodat de fetch
         fetch('/users', {
             method: 'POST',
             headers: {
-                'Content-Type': 'application/json'
+                'X-CSRF-TOKEN': csrfToken,
+                'Content-Type': 'application/json',
+                'Accept': 'application/json'
             },
             body: JSON.stringify(formData)
         })
