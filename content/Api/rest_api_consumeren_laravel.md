@@ -2,19 +2,18 @@
 title: "REST api consumeren in laravel"
 weight: 6
 author: Arne Duyver
-draft: true
+draft: false
 ---
 
-# REST api oproepen in Laravel vanuit de frontend met Javascript
-## 6: Demo 1
+## REST api oproepen in Laravel vanuit de frontend met Javascript
 Om een ​​Laravel-project te maken dat communiceert met de REST API met behulp van JavaScript in de frontend, moeten we volgende zaken doen:
 
 1. Laravel project aanmaken
-2. Gebruik JavaScript om de Flask API aan te roepen
+2. Gebruik JavaScript om de Flask API aan te roepen: `fetch` ([asynchroon](https://kuleuven-diepenbeek.github.io/fsweb-course/frontend/javascript_basics/#synchroon-vs-asynchroon))
 3. Creëer de nodige Laravel controllers
 4. Configureer routes
 
-## Laravel project aanmaken
+### 1. Laravel project aanmaken
 ```bash
 composer create-project laravel/laravel consumeApi
 # change database type to 'mysql' in .env
@@ -24,7 +23,7 @@ php artisan migrate
 php artisan serve --host 0.0.0.0
 ```
 
-## Laravel views en Javascript calls
+### 2. Laravel views en Javascript calls
 We gebruiken JavaScript (met fetch) om de Flask REST API op te roepen.
 Maak een nieuwe lay-out als deze niet bestaat en voeg vervolgens de benodigde HTML-structuure: `views/users.blade.php`
 <details open>
@@ -151,7 +150,7 @@ Maak een nieuwe lay-out als deze niet bestaat en voeg vervolgens de benodigde HT
 </p>
 </details>
 
-## Routes definiëren
+### 4. Routes definiëren
 
 Definieer in `routes/web.php` een route om de users view te laden.
 
@@ -167,11 +166,8 @@ Open nu de Laravel-frontend (http://localhost:8000/users) en je zou de users vie
 Zorg ervoor dat je Flask applicatie aan het runnen is.
 
 
-## Opdracht:
-Voeg een geslacht toe aan de gebruikers en pas alle nodige code aan in de Flask applicatie en de Laravel applicatie.
 
-# REST api oproepen in Laravel vanuit de backend met php (flask app en laravel in 1 docker-compose file)
-## 6: Demo 2
+## REST api oproepen in Laravel vanuit de backend met php
 We kunnen een extra route toevoegen in de `routes/web.php` naar `/usersBackend`. We maken hier weer een nieuwe view voor aan. De functionaliteit van het endpoint kunnen we volledig definiëren in `web.php`. Om met de requests te kunnen werken hebben we de Guzzle module nodig. Installeer deze via `composer require guzzlehttp/guzzle`
 
 We kunnen nu gelijkaardige HTML code gebruiken als bovenstaande, maar de javascript kan nu grotendeels weggelaten worden: `views/usersBackend.blade.php`. De view gaat nu van php automatisch een list van users meekrijgen, die we kunnen uilezen in blade.php files met: `$users`
@@ -240,7 +236,7 @@ Route::get('/usersBackend', function () {
 </p>
 </details>
 
-## Models, controllers
+### 3. Models, controllers
 Willen we nu echter meer functionaliteit dan kunnen we best eigen endpoints in Laravel definiëren die op hun beurt een oproep gaan doen naar de Flask API. We laten onze frontend dan onze Laravel endpoints aanroepen om via de backend de call naar de Flask API uit te voeren. Hiervoor kunnen we best een Controller aanmaken die de calls doet naar de API. 
 
 Je kan een controller aanmaken via `php artisan make:controller FlaskUserController`. Het bestand bevindt zich nu in `app/Http/Controllers/FlaskUserController.php` en laten we er als volgend uitzien:
