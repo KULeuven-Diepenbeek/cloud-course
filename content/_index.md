@@ -50,6 +50,7 @@ Dit opleidingsonderdeel focust op ... -->
 - Besturingssystemen en C
 - Databases
 - Software Engineering Skills (cmdline, linux, git ...)
+- Full Stack Web-Development
 
 #### Doelstellingen
 
