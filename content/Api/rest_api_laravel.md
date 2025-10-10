@@ -2,9 +2,9 @@
 title: "REST api in laravel"
 weight: 7
 author: Arne Duyver
-draft: true
+draft: false
 ---
-## REST api in Laravel: Demo 3
+## REST api in Laravel: Demo
 Verder kunnen we onze Laravel website uitbreiden met een eigen REST API gedefinieerd in Laravel zelf (of in een andere Laravel applicatie die op een andere server draait)
 
 Hiervoor maken we dan wel een LaravelUser model aan omdat we nu effectief de Laravel database gaan gebruiken: `php artisan make:model LaravelUser -mcf`. Met dit commando wordt er ook automatisch een migrationTable en Controller aangemaakt.
@@ -437,3 +437,5 @@ protected $middlewareGroups = [
 </details>
 
 4. Verwijder de cache van configuratiebestanden: `php artisan config:clear`
+
+## Opdracht: werk nu je eigen Rest api in Laravel uit en maak een gepaste frontend.
