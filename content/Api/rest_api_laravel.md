@@ -4,12 +4,12 @@ weight: 7
 author: Arne Duyver
 draft: true
 ---
-## 6: Demo 3
-Verder kunnen we onze laravel website uitbreiden met een eigen REST API gedefinieerd in laravel zelf (of in een andere laravel applicatie die op een andere server draait)
+## REST api in Laravel: Demo 3
+Verder kunnen we onze Laravel website uitbreiden met een eigen REST API gedefinieerd in Laravel zelf (of in een andere Laravel applicatie die op een andere server draait)
 
-Hiervoor maken we dan wel een LaravelUser model aan omdat we nu effectief de laravel database gaan gebruiken: `php artisan make:model LaravelUser -mcf`. Met dit commando wordt er ook automatisch een migrationTable en Controller aangemaakt.
+Hiervoor maken we dan wel een LaravelUser model aan omdat we nu effectief de Laravel database gaan gebruiken: `php artisan make:model LaravelUser -mcf`. Met dit commando wordt er ook automatisch een migrationTable en Controller aangemaakt.
 
-In de controller gaan we nu dan de functionaliteit van onze REST API programmeren volledig analoog aan onze Flask implementatie alleen moeten we nu PHP specifieke syntax gebruiken:
+In de controller gaan we nu dan de functionaliteit van onze REST API programmeren, volledig analoog aan onze Flask implementatie. Alleen moeten we nu PHP specifieke syntax gebruiken:
 <details open>
     <summary><i><b>Klik hier om de code te zien/verbergen voor `app/Http/LaravelUserController.php`</b></i></summary>
     <p>
@@ -121,9 +121,12 @@ class LaravelUser extends Model
 </p>
 </details>
 
-### migration `database/migrations/2024_10_14_074850_create_laravel_users_table.php`
+### migration `database/migrations/XXXX_XX_XX_XXXXXX_create_laravel_users_table.php`
+
+De migration table zorgt hier weer voor de link tussen de php objecten en de database tabellen:
+
 <details open>
-    <summary><i><b>Klik hier om de code te zien/verbergen voor `database/migrations/2024_10_14_074850_create_laravel_users_table.php`</b></i></summary>
+    <summary><i><b>Klik hier om de code te zien/verbergen voor `database/migrations/XXXX_XX_XX_XXXXXX_create_laravel_users_table.php`</b></i></summary>
     <p>
 
 ```php
@@ -186,7 +189,7 @@ Route::delete('/laravelUsers/{id}', [LaravelUserController::class, 'deleteLarave
 </p>
 </details>
 
-We kunnen nu dan ook een de users view in ons hoofdproject aanpassen en deze endpoints gebruiken in plaats van de Flask endpoints: `views/users.blade.php`
+We kunnen nu dan ook de users view in ons hoofdproject aanpassen en deze endpoints gebruiken in plaats van de Flask endpoints: `views/users.blade.php`
 
 <details open>
     <summary><i><b>Klik hier om de code te zien/verbergen voor `views/users.blade.php`</b></i></summary>
@@ -364,6 +367,7 @@ class AppServiceProvider extends ServiceProvider
 ## Factory and Seeders
 Je kan Laravel nu ook gebruiken om automatisch wat dummy data te genereren in de database. Hierover vind je meer op volgende website: [FSWEB](https://kuleuven-diepenbeek.github.io/fsweb-course/backend/laravel_code/) of via deze [video](https://www.youtube.com/watch?v=YETNihHReo4)
 
+*In het de opgeloste demo in de student-repository werden ook al factories en seeders voorzien. Die worden dankzij de `entrypoint.sh` dan ook opgeroepen bij het starten van de container.*
 
 ## Enable CORS
 

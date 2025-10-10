@@ -242,11 +242,21 @@ Nu onze Flask REST API in een Docker container draait, kunnen we deze testen van
 3. Klik "Send"
 4. **Verwacht resultaat**: JSON array met alle gebruikers uit de database
 
+*alternateief: `curl`*
+```bash
+curl -X GET "http://localhost:5000/api/users?pwd=mypassword" -H "Content-Type: application/json"
+```
+
 #### GET - Specifieke gebruiker ophalen
 1. Nieuwe request:
    - **Method**: GET
    - **URL**: `http://localhost:5000/api/users/1`
 2. **Verwacht resultaat**: JSON object van gebruiker met ID 1
+
+*alternateief: `curl`*
+```bash
+curl -X GET "http://localhost:5000/api/users/1" -H "Content-Type: application/json"
+```
 
 #### POST - Nieuwe gebruiker aanmaken
 1. Nieuwe request:
@@ -262,6 +272,16 @@ Nu onze Flask REST API in een Docker container draait, kunnen we deze testen van
      ```
 2. **Verwacht resultaat**: Bevestiging dat gebruiker is aangemaakt
 
+*alternateief: `curl`*
+```bash
+curl -X POST "http://localhost:5000/api/users" \
+-H "Content-Type: application/json" \
+-d '{
+  "name": "Test User",
+  "email": "test@example.com"
+}'
+```
+
 #### PUT - Gebruiker bijwerken
 1. Nieuwe request:
    - **Method**: PUT
@@ -275,10 +295,25 @@ Nu onze Flask REST API in een Docker container draait, kunnen we deze testen van
      }
      ```
 
+*alternateief: `curl`*
+```bash
+curl -X PUT "http://localhost:5000/api/users/1" \
+-H "Content-Type: application/json" \
+-d '{
+  "name": "Updated User",
+  "email": "updated@example.com"
+}'
+```
+
 #### DELETE - Gebruiker verwijderen
 1. Nieuwe request:
    - **Method**: DELETE
    - **URL**: `http://localhost:5000/api/users/1`
+
+*alternateief: `curl`*
+```bash
+curl -X DELETE "http://localhost:5000/api/users/1" -H "Content-Type: application/json"
+```
 
 <!-- #### Automatiseren met Thunder Client Collections
 
