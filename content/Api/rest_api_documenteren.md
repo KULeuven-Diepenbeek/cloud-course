@@ -434,7 +434,7 @@ def get_user(user_id):
 Door deze vaste structuur te volgen, kan **Swagger** of **Flasgger** de docstring automatisch omzetten in duidelijke, interactieve documentatie op de `/apidocs`-pagina, inclusief beschrijvingen, voorbeelddata en invoervelden.
 
 
-#### 3. Markdown documentatie (zoals deze cursus)
+#### 3. Markdown documentatie
 
 Markdown-documentatie is ideaal voor **readme-bestanden** of **projectwikis**. Je kan hierin beschrijven:
 
