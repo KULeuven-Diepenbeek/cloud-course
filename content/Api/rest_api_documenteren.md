@@ -508,13 +508,7 @@ Installatie via Composer:
 composer require --dev knuckleswtf/scribe
 ```
 
-Daarna publiceer je de configuratie:
-
-```bash
-php artisan scribe:install
-```
-
-Dit maakt het bestand `config/scribe.php` aan, waar je titel, beschrijving en base URL kunt instellen.
+_Uitvoeren in je projectmap!_
 
 #### Documenteren via PHPDoc-comments
 
@@ -657,7 +651,7 @@ php artisan scribe:generate
 De documentatie wordt beschikbaar gemaakt op:
 
 ```
-http://localhost/docs
+http://localhost:<portnr>/docs
 ```
 
 Daar vind je een interactieve interface waarin je requests kunt uitvoeren, voorbeelden kunt bekijken en parameters kunt testen.
