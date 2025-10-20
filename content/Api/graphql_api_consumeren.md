@@ -2,7 +2,7 @@
 title: "GraphQL api consumeren in laravel"
 weight: 9
 author: Arne Duyver
-draft: true
+draft: false
 ---
 
 ## Wat is GraphQL?

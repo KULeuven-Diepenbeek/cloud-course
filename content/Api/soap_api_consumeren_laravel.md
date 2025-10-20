@@ -1,6 +1,6 @@
 ---
 title: "SOAP api consumeren in laravel"
-weight: 8
+weight: 20
 author: Arne Duyver
 draft: true
 ---
@@ -36,11 +36,13 @@ draft: true
 ### Wanneer REST kiezen?
 - Voor **webservices** waar snelheid, eenvoud en flexibiliteit belangrijk zijn, zoals in **mobiele applicaties**.
 
+<!-- TODO: add example with composer require ricorocks-digital-agency/soap, use RicorocksDigitalAgency\Soap\Facades\Soap, Soap::to($endpoint)->functions(), ... SHOW how to get all available functions -->
+
 ## SOAP api oproepen in Laravel vanuit de frontend met Javascript
 Om een ​​Laravel-project te maken dat communiceert met de SOAP API met behulp van JavaScript in de frontend, moeten we volgende zaken doen:
 
 1. Laravel project aanmaken
-2. Gebruik JavaScript om de Flask API aan te roepen
+2. Gebruik JavaScript om de SOAP API aan te roepen
 3. Creëer de nodige Laravel controllers
 4. Configureer routes
 
@@ -55,7 +57,7 @@ php artisan serve --host 0.0.0.0
 ```
 
 ### Laravel views en Javascript calls
-We gebruiken JavaScript (met fetch) om de Flask REST API op te roepen.
+We gebruiken JavaScript (met fetch) om de SOAP API op te roepen.
 Maak een nieuwe lay-out als deze niet bestaat en voeg vervolgens de benodigde HTML-structuur en een tijdelijke aanduiding voor de inhoud toe: `views/soap.blade.php`.
 
 Je kan de [Wizdler extentie](https://chromewebstore.google.com/detail/wizdler/oebpmncolmhiapingjaagmapififiakb) gebruiken om na te gaan hoe de body er juist moet uitzien.
