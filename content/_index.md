@@ -18,7 +18,7 @@ Academiejaar 2025---2026.
 | 04  | ma 06-10-2025 | REST api maken (met Flask) + consumeren met Laravel                          |
 | 05  | ma 13-10-2025 | REST api consumeren + maken (Laravel)                                        |
 | 06  | ma 20-10-2025 | REST api documenteren + GraphQl api consumeren                               |
-| 07  | ma 03-11-2025 | Extra les als de lessen uitlopen en/of voor extra vragen of hulp bij project |
+| 07  | ma 03-11-2025 | Live Laravel environment opzetten en Extra vragen of hulp bij project        |
 
 ## _Cursus noties_
 
