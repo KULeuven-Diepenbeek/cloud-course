@@ -70,7 +70,7 @@ php artisan migrate
 php artisan serve --host 0.0.0.0
 ```
 
-### 6: Demo 5
+### Demo 4: GraphQl api consumeren in Laravel
 We een endpoint voorzien in de `routes/web.php` en we gaan de [`PHP GraphQL Client`](https://github.com/softonic/graphql-client) module gebruiken om de GraphQL queries uit te voeren. (`composer require softonic/graphql-client`):
 
 <details open>

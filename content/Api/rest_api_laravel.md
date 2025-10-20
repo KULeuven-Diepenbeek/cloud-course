@@ -418,24 +418,50 @@ return [
 </p>
 </details>
 
-3. Controleer of de CORS-middleware is geregistreerd in de kernel. Open het bestand `app/Http/Kernel.php` en controleer of de CORS-middleware aanwezig is in de api middleware-groep.
+<!-- 3. Controleer of de CORS-middleware is geregistreerd in de kernel. Open het bestand `app/Http/Kernel.php` en controleer of de CORS-middleware aanwezig is in de api middleware-groep. -->
+
+3. Voeg `api: __DIR__.'/../routes/api.php',` aan de `bootstrap/app.php` file
 
 <details open>
-    <summary><i><b>Klik hier om de code te zien/verbergen voor `app/Http/Kernel.php`</b></i></summary>
+    <summary><i><b>Klik hier om de code te zien/verbergen voor `bootstrap/app.php`</b></i></summary>
     <p>
 
 ```php
-protected $middlewareGroups = [
-    'api' => [
-        \Illuminate\Routing\Middleware\SubstituteBindings::class,
-        \Fruitcake\Cors\HandleCors::class, // Zorg dat deze regel aanwezig is
-    ],
-];
+<?php
+
+use Illuminate\Foundation\Application;
+use Illuminate\Foundation\Configuration\Exceptions;
+use Illuminate\Foundation\Configuration\Middleware;
+
+return Application::configure(basePath: dirname(__DIR__))
+    ->withRouting(
+        web: __DIR__.'/../routes/web.php',
+        api: __DIR__.'/../routes/api.php',
+        commands: __DIR__.'/../routes/console.php',
+        health: '/up',
+    )
+    ->withMiddleware(function (Middleware $middleware): void {
+        //
+    })
+    ->withExceptions(function (Exceptions $exceptions): void {
+        //
+    })->create();
+
 ```
 
 </p>
 </details>
 
-4. Verwijder de cache van configuratiebestanden: `php artisan config:clear`
+<!-- 4. Verwijder de cache van configuratiebestanden: `php artisan config:clear` -->
+<!-- Created a custom CORS middleware (app/Http/Middleware/CorsMiddleware.php):
 
+Handles preflight OPTIONS requests
+Adds necessary CORS headers to all API responses
+Allows all origins, methods, and common headers
+Applied the CORS middleware to API routes:
+
+Added the middleware to the API middleware stack in app.php
+Fixed the API routes file:
+
+Added the missing use Illuminate\Support\Facades\Route; statement -->
 ## Opdracht: werk nu je eigen Rest api in Laravel uit en maak een gepaste frontend.
