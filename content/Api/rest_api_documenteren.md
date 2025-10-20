@@ -483,17 +483,6 @@ json:
 
 Markdown heeft als voordeel dat het eenvoudig leesbaar is en ook op GitHub, GitLab of binnen cursusmateriaal goed weergegeven wordt.
 
-#### Best practices voor goede API-documentatie
-
-1. **Gebruik consistente namen** voor endpoints en parameters.
-2. **Beschrijf HTTP-methodes duidelijk** – vermeld steeds of het een `GET`, `POST`, `PUT` of `DELETE` is.
-3. **Vermeld de vereiste headers**, vooral als je `Content-Type` of authenticatie gebruikt.
-4. **Toon voorbeeldverzoeken en -antwoorden** in JSON-formaat.
-5. **Documenteer foutmeldingen** – leg uit wat elke HTTP-statuscode betekent.
-6. **Gebruik OpenAPI/Swagger** voor automatische updates van documentatie.
-7. **Houd documentatie synchroon met de code** – update deze telkens bij nieuwe endpoints.
-
-
 #### Extra tools
 
 - **Flasgger**: genereert Swagger-documentatie direct uit docstrings.
@@ -677,10 +666,32 @@ Daar vind je een interactieve interface waarin je requests kunt uitvoeren, voorb
 
 #### Samenvatting en Best practices
 
-* **Gebruik consistente @group-tags** voor duidelijke indeling.
-* **Schrijf korte maar beschrijvende uitleg** boven elke route.
+Algemeen:
+* **Gebruik consistente namen** voor endpoints en parameters.
+* **Beschrijf HTTP-methodes duidelijk**: vermeld steeds of het een `GET`, `POST`, `PUT` of `DELETE` is.
+* **Vermeld de vereiste headers**, vooral als je `Content-Type` of authenticatie gebruikt.
 * **Gebruik voorbeelddata** via `Example:` om gegenereerde UI beter te vullen.
 * **Documenteer alle statuscodes** die je gebruikt (`200`, `400`, `403`, `404`, `500`).
-* **Her-genereer documentatie** altijd wanneer je routes of responses aanpast.
+* **Documenteer dus ook foutmeldingen**: leg uit wat elke HTTP-statuscode betekent.
+
+Flask:
+* **Toon voorbeeldverzoeken en -antwoorden** in JSON-formaat.
+* **Gebruik OpenAPI/Swagger** voor automatische updates van documentatie.
+* **Houd documentatie synchroon met de code**: swagger module houdt dit normaal in de gaten.
+
+Laravel:
+* **Gebruik consistente @group-tags** voor duidelijke indeling.
+* **Schrijf korte maar beschrijvende uitleg** boven elke route.
+* **Houd documentatie synchroon met de code**: Her-genereer documentatie altijd wanneer je routes of responses aanpast.
 
 Met deze aanpak genereert Laravel Scribe automatisch professioneel ogende documentatie voor jouw REST API.
+
+#### Best practices voor goede API-documentatie
+
+1. 
+2. 
+3. 
+4. 
+5. 
+6. 
+7. 
