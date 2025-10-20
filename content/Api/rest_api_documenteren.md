@@ -683,15 +683,3 @@ Laravel:
 * **Gebruik consistente @group-tags** voor duidelijke indeling.
 * **Schrijf korte maar beschrijvende uitleg** boven elke route.
 * **Houd documentatie synchroon met de code**: Her-genereer documentatie altijd wanneer je routes of responses aanpast.
-
-Met deze aanpak genereert Laravel Scribe automatisch professioneel ogende documentatie voor jouw REST API.
-
-#### Best practices voor goede API-documentatie
-
-1. 
-2. 
-3. 
-4. 
-5. 
-6. 
-7. 
