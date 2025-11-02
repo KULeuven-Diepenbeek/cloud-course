@@ -95,6 +95,17 @@ $ sudo service nginx reload
 
 Je Laravel app draait nu via **NGINX** op [http://localhost](http://localhost).
 
+**PHP-FPM (PHP FastCGI Process Manager)** is een speciaal onderdeel van PHP dat instaat voor het efficiënt uitvoeren van PHP-code op een webserver. In plaats van bij elke inkomende webrequest een nieuwe PHP-interpreter te starten (wat traag en inefficiënt is), houdt PHP-FPM een pool van processen actief die klaarstaan om PHP-scripts uit te voeren. Wanneer een webserver zoals NGINX een verzoek ontvangt naar een .php-bestand, stuurt hij dat via het FastCGI-protocol door naar PHP-FPM, dat het script verwerkt en het resultaat (meestal HTML) terugstuurt. Dit zorgt voor snellere laadtijden, betere schaalbaarheid en stabielere prestaties bij drukbezochte websites. Bovendien laat PHP-FPM toe om meerdere pools met verschillende configuraties te beheren — handig als je meerdere webapps met verschillende PHP-instellingen op één server wilt draaien.
+
+```bash
+sudo apt install php8.2 php8.2-cli php8.2-common php8.2-mbstring php8.2-pdo php8.2-mysql
+sudo apt install php8.2-fpm
+sudo service php8.2-fpm start
+sudo nginx -t
+sudo service nginx reload
+sudo service php8.2-fpm restart
+sudo service nginx restart
+```
 
 #### Wat doet dit configuratiebestand precies?
 
