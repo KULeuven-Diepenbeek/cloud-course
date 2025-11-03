@@ -100,6 +100,8 @@ Je Laravel app draait nu via **NGINX** op [http://localhost](http://localhost).
 ```bash
 sudo apt install php8.2 php8.2-cli php8.2-common php8.2-mbstring php8.2-pdo php8.2-mysql
 sudo apt install php8.2-fpm
+sudo chown -R www-data:www-data /app/<projectdirectory>
+sudo chmod -R 755 /app/<projectdirectory>
 sudo service php8.2-fpm start
 sudo nginx -t
 sudo service nginx reload
