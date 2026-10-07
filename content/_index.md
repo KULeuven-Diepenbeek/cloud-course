@@ -5,20 +5,20 @@ author: Arne Duyver
 
 # Cloud Computing & Toepassingen
 
-Academiejaar 2025---2026.
+Academiejaar 2026---2027.
 
 
 ## _Planning applicatiecolleges_
 
 | nr  | datum         | onderwerp                                                                    |
 |-----|---------------|------------------------------------------------------------------------------|
-| 01  | di 16-09-2025 | Docker Basics                                                                |
-| 02  | ma 22-09-2025 | Docker build files & networks                                                |
-| 03  | ma 29-09-2025 | Kubernetes intro + REST theorie en maken met Flask                           |
-| 04  | ma 06-10-2025 | REST api maken (met Flask) + consumeren met Laravel                          |
-| 05  | ma 13-10-2025 | REST api consumeren + maken (Laravel)                                        |
-| 06  | ma 20-10-2025 | REST api documenteren + GraphQl api consumeren                               |
-| 07  | ma 03-11-2025 | Live Laravel environment opzetten en Extra vragen of hulp bij project        |
+| 01  | ma 05-10-2026 | Docker Basics                                                                |
+| 02  | do 08-10-2026 | Docker build files & networks                                                |
+| 03  | ma 12-10-2026 | Kubernetes intro + REST theorie en maken met Flask                           |
+| 04  | wo 14-10-2026 | REST api maken (met Flask) + consumeren met Laravel                          |
+| 05  | ma 19-10-2026 | REST api consumeren + maken (Laravel)                                        |
+| 06  | ma 26-10-2026 | REST api documenteren + GraphQl api consumeren                               |
+| 07  | vr 13-11-2026 | Live Laravel environment opzetten en Extra vragen of hulp bij project        |
 
 ## _Cursus noties_
 
@@ -36,7 +36,7 @@ Er worden telkens blokken van 2 uur ingepland voor dit vak. Er zijn geen traditi
 
 - **Lesgevers**:
     + Coördinerend Verantwoordelijke: prof. dr. Kris Aerts ([kris.aerts@kuleuven.be](mailto:kris.aerts@kuleuven.be))
-    + assistent lesgever: ing. Arne Duyver ([arne.duyver@kuleuven.be](mailto:arne.duyver@kuleuven.be))
+    + assistent lesgever: ing. Martijn Snoeks ([martijn.snoeks@kuleuven.be](mailto:martijn.snoeks@kuleuven.be))
 - **Kantoor**: Technologiecentrum Diepenbeek, Groep ACRO. 
 
 
